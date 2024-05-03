@@ -1,6 +1,6 @@
+
 plugins {
   id("java")
-  id("org.jetbrains.kotlin.jvm") version "1.9.22"
   id("org.jetbrains.intellij") version "1.17.3"
   id("org.openjfx.javafxplugin") version "0.1.0"
 }
@@ -12,13 +12,14 @@ repositories {
   mavenCentral()
 }
 dependencies {
-  implementation("org.openjfx:javafx-controls:21")
-  implementation("org.openjfx:javafx-fxml:21")
-  implementation("org.openjfx:javafx-swing:21")
+  implementation("org.openjfx:javafx-controls:22")
+  implementation("org.openjfx:javafx-swing:22")
+  implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.3")
+  implementation("com.google.code.gson:gson:2.8.9")
 }
 javafx {
-  version = "21"
-  modules("javafx.controls", "javafx.fxml", "javafx.media")
+  version = "22"
+  modules("javafx.controls")
 }
 
 // Configure Gradle IntelliJ Plugin
@@ -31,15 +32,11 @@ intellij {
 }
 
 
-
 tasks {
   // Set the JVM compatibility versions
   withType<JavaCompile> {
     sourceCompatibility = "17"
     targetCompatibility = "17"
-  }
-  withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
   }
 
   patchPluginXml {

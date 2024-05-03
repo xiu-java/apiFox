@@ -25,8 +25,11 @@
   <!-- Extension points defined by the plugin.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
   <extensions defaultExtensionNs="com.intellij">
+    <projectService serviceInterface="com.example.apifox.component.ApiService"
+                        serviceImplementation="com.example.apifox.service.ApiServiceImpl"/>
+
     <!-- 窗体 (IDEA 界面右侧) -->
-    <toolWindow id="Read-Book" secondary="false" anchor="right" icon="/icons/logo.png"
-                factoryClass="com.example.apifox.ReadFactory"/>
+    <toolWindow id="Read-Book" secondary="false" anchor="right" icon="/icons/icon.svg"
+                factoryClass="com.example.apifox.controller.SourceManage"/>
   </extensions>
 </idea-plugin>

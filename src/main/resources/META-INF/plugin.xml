@@ -27,9 +27,11 @@
   <extensions defaultExtensionNs="com.intellij">
     <projectService serviceInterface="com.example.apifox.component.ApiService"
                         serviceImplementation="com.example.apifox.service.ApiServiceImpl"/>
+    <projectService serviceInterface="com.example.apifox.component.DataSourceService"
+                        serviceImplementation="com.example.apifox.service.DataSourceServiceImpl"/>
 
     <!-- 窗体 (IDEA 界面右侧) -->
-    <toolWindow id="Read-Book" secondary="false" anchor="right" icon="/icons/icon.svg"
+    <toolWindow id="apifox" secondary="false" anchor="right" icon="/icons/apifox.png"
                 factoryClass="com.example.apifox.controller.SourceManage"/>
   </extensions>
 </idea-plugin>

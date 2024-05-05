@@ -7,18 +7,11 @@ import java.util.Map;
 
 public class Schema {
     private String type;
-
-    private Map<String,Filed> properties;
-
     private List<String> required;
-
     private String $ref;
-
     @SerializedName("default")
     private String flied;
 
-    @SerializedName("x-apifox-orders")
-    private List<String> xApifoxOrders;
 
     private String description;
 
@@ -54,13 +47,6 @@ public class Schema {
         this.$ref = $ref;
     }
 
-    public Map<String, Filed> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Map<String, Filed> properties) {
-        this.properties = properties;
-    }
 
     public List<String> getRequired() {
         return required;
@@ -70,11 +56,4 @@ public class Schema {
         this.required = required;
     }
 
-    public List<String> getxApifoxOrders() {
-        return xApifoxOrders;
-    }
-
-    public void setxApifoxOrders(List<String> xApifoxOrders) {
-        this.xApifoxOrders = xApifoxOrders;
-    }
 }

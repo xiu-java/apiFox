@@ -1,7 +1,7 @@
 package com.example.apifox.model;
 
 public enum MethodType {
-        GET("get"), POST("post"), PUT("put"), DELETE("delete");
+        GET("get"), POST("post"), PUT("put"), DELETE("del");
         private final String value;
         MethodType(String status) {
                 this.value = status;

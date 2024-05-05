@@ -1,8 +1,11 @@
 package com.example.apifox.service;
 
 import com.example.apifox.component.ApiService;
+import com.example.apifox.component.DataSourceService;
 import com.example.apifox.model.Tree;
 import com.google.gson.Gson;
+import com.intellij.openapi.components.Service;
+import com.intellij.openapi.project.Project;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -10,10 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Service
 public class ApiServiceImpl implements ApiService {
     final OkHttpClient client = new OkHttpClient();
     final private Gson gson = new Gson();
     MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+    public static ApiService getInstance(Project project) {
+        return project.getService(ApiService.class);
+    }
+
     @Override
     public Tree makeApiRequest(String projectId) {
         String url = "https://api.apifox.com/api/v1/projects/" + projectId + "/export-openapi";

@@ -4,52 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cce6504e-3e92-40e0-aaac-c003116104ec" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/swagger-settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/ApiService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Body.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/ChildrenFiled.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Components.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Content.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Detail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Filed.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/HttpStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/MethodType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Parameters.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Paths.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/RequestBody.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Responses.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Schema.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Tag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Tree.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/ApiServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tst.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="cce6504e-3e92-40e0-aaac-c003116104ec" name="Changes" comment="请求接口">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataSourceService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/SchemaVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/FileCell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/FolderCell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SchemaPane.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SourcePane.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/arrow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/arrow.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/toolWindow/Calendar-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/toolWindow/Time-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/toolWindow/Time-zone-icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.run/Run Plugin.run.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.run/Run Plugin.run.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/Hello.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/ReadFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Components.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/FileItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeItemVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Filed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Filed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/MethodType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/MethodType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Schema.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/ApiServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/ApiServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/FileTreeCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/CustomTreeCell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/pluginIcon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/pluginIcon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/apifox/hello.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/apifox/read-factory.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/icons/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/icons/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/icons/apifox.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/icons/apifox.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,12 +88,32 @@
       <list>
         <option value="FxmlFile" />
         <option value="OpenAPI" />
+        <option value="CSS File" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;luodexun&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/xiu-java/apiFox.git&quot;,
+    &quot;accountId&quot;: &quot;70cfca2a-9a1d-47ea-9b7e-ec9b8f98e88c&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/22/221641eefaa6f2cbdd70bc7ead1853b0090cb4b/javafx-controls-22-mac.jar!/com/sun/javafx/scene/control/skin/caspian/caspian.css" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/22/b84a332030c7465265cbdde6be76e3586a438996/javafx-controls-22-sources.jar!/javafx/scene/control/TreeItem.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/22/b84a332030c7465265cbdde6be76e3586a438996/javafx-controls-22-sources.jar!/javafx/scene/control/TreeView.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/22/9a33d8d11535025d5b03f0b8b0a97773ef1edc03/javafx-graphics-22-sources.jar!/javafx/scene/layout/Background.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/Library/Java/JavaVirtualMachines/azul-21.0.3/Contents/Home/lib/src.zip!/java.desktop/com/apple/eawt/_AppEventHandler.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -121,7 +123,7 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -134,53 +136,81 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Run Plugin.executor": "Debug",
-    "Gradle.apifox [clean].executor": "Run",
-    "Gradle.apifox [runIde].executor": "Run",
-    "Gradle.apifox [setupDependencies].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "jdk.selected.JAVA_MODULE": "azul-21",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "/Users/luodexun/Documents/apifox/src/main/java/com/example/apifox",
-    "last_opened_file_path": "/Users/luodexun/Documents/code/java/owner/apifox",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.4402299",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Run Plugin.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.apifox [buildPlugin].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.apifox [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.apifox [runIde].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.apifox [setupDependencies].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;azul-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;/Users/luodexun/Documents/apifox/src/main/java/com/example/apifox&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/luodexun/Documents/code/java/owner/apifox/src/main/resources&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.4402299&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "kotlin-gradle-user-dirs": [
-      "/Users/luodexun/.gradle"
+  &quot;keyToStringList&quot;: {
+    &quot;kotlin-gradle-user-dirs&quot;: [
+      &quot;/Users/luodexun/.gradle&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/resources/icons" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/example/apifox/controller" />
       <recent name="$PROJECT_DIR$/src/main/resources/com/example/apifox" />
-      <recent name="$PROJECT_DIR$/src/main" />
+      <recent name="$PROJECT_DIR$/src/main/java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/icons" />
+      <recent name="$PROJECT_DIR$/src/main/resources/css" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.apifox.view" />
       <recent name="com.example.apifox.model" />
       <recent name="com.example.apifox" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Run Plugin">
+    <configuration name="apifox [buildPlugin]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildPlugin" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="apifox [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -205,10 +235,12 @@
     </configuration>
     <list>
       <item itemvalue="Gradle.Run Plugin" />
+      <item itemvalue="Gradle.apifox [buildPlugin]" />
       <item itemvalue="Gradle.apifox [clean]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.apifox [buildPlugin]" />
         <item itemvalue="Gradle.apifox [clean]" />
       </list>
     </recent_temporary>
@@ -236,12 +268,34 @@
       <workItem from="1714540180940" duration="2601000" />
       <workItem from="1714542879339" duration="3054000" />
       <workItem from="1714652838577" duration="9019000" />
-      <workItem from="1714699568661" duration="23669000" />
+      <workItem from="1714699568661" duration="40215000" />
+      <workItem from="1714786326567" duration="31085000" />
+      <workItem from="1714818752760" duration="13422000" />
+      <workItem from="1714838750555" duration="49000" />
+      <workItem from="1714838816320" duration="308000" />
+      <workItem from="1714840217767" duration="1744000" />
+      <workItem from="1714842002119" duration="118000" />
+      <workItem from="1714868959895" duration="1207000" />
     </task>
+    <task id="LOCAL-00001" summary="请求接口">
+      <option name="closed" value="true" />
+      <created>1714733408906</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1714733408906</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="请求接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="请求接口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -252,9 +306,9 @@
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java</url>
-          <line>67</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataSourceService.java</url>
+          <line>8</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -263,7 +317,6 @@
         <PinnedItemInfo parentTag="com.example.apifox.model.Content" memberName="body" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Item" memberName="post" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Detail" memberName="parameters" />
-        <PinnedItemInfo parentTag="com.google.gson.internal.LinkedTreeMap$Node" memberName="value" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Tree" memberName="tags" />
       </pinned-members>
     </pin-to-top-manager>

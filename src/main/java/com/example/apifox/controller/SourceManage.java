@@ -1,28 +1,32 @@
 package com.example.apifox.controller;
 
-import com.example.apifox.component.ApiService;
-import com.example.apifox.model.FileItem;
-import com.example.apifox.model.Tree;
-import com.example.apifox.view.FileTreeCell;
+import com.example.apifox.component.DataSourceService;
+import com.example.apifox.model.*;
+import com.example.apifox.view.CustomTreeCell;
+import com.example.apifox.view.SchemaPane;
+import com.example.apifox.view.SourcePane;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowFactory;
+import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 项目: idea-plugins
@@ -37,35 +41,41 @@ import java.util.List;
  * @create: 2022-02-24 13:31
  **/
 public class SourceManage implements ToolWindowFactory {
-
+    private  final JFXPanel fxPanel = new JFXPanel();
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         // 创建 JavaFX 面板
-        JFXPanel fxPanel = new JFXPanel();
-        VBox root = new VBox();
 
         // 确保在JavaFX应用程序线程上执行
         Platform.runLater(() -> {
-            // 在此处构建你的JavaFX UI
-            Scene scene = new Scene(root, 400, 300); // 假设是你需要的大小
-            TreeView<FileItem> treeView = new TreeView<>();
-            treeView.setCellFactory(tv -> new FileTreeCell());
-            treeView.setStyle("-fx-tree-disclosure-node: url('/icons/apifox.png');");
-            TreeItem<FileItem> rootItem = new TreeItem<>(new FileItem("Root", true));
-            TreeItem<FileItem> folder1 = new TreeItem<>(new FileItem("Folder1", true));
-            TreeItem<FileItem> folder2 = new TreeItem<>(new FileItem("Folder2", true));
-            TreeItem<FileItem> file1 = new TreeItem<>(new FileItem("File1.txt", false));
-            TreeItem<FileItem> file2 = new TreeItem<>(new FileItem("File2.txt", false));
-            List<TreeItem<FileItem>> items = new ArrayList<>();
-            items.add(folder1);
-            items.add(folder2);
-            rootItem.getChildren().addAll(items);
-            folder1.getChildren().add(file1);
-            folder2.getChildren().add(file2);
-            treeView.setRoot(rootItem);
-            ApiService service = project.getService(ApiService.class);
-            Tree data = service.makeApiRequest("4282402");
-            root.getChildren().add(treeView);
+            StackPane stackPane = new StackPane();
+            stackPane.setStyle("-fx-background-color: lightblue;");
+            SourcePane sourcePane = new SourcePane();
+            SchemaPane schemaPane = new SchemaPane();
+            stackPane.getChildren().addAll(schemaPane,sourcePane);
+            stackPane.setMinSize(StackPane.USE_PREF_SIZE, StackPane.USE_PREF_SIZE);
+            sourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    // 创建淡出动画
+                    TreeItemVO selectedValue = sourcePane.getSelectionModel().getSelectedItem().getValue();
+                    System.out.println(selectedValue);
+                    FadeTransition fadeOut = new FadeTransition(Duration.millis(500), sourcePane);
+                    fadeOut.setFromValue(1.0);
+                    fadeOut.setToValue(0.0);
+                    fadeOut.setOnFinished(animation -> {
+                        // 隐藏TreeView
+                        sourcePane.setVisible(false);
+                        // 创建淡入动画
+//                        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), schemaPane);
+//                        fadeIn.setFromValue(0.0);
+//                        fadeIn.setToValue(1.0);
+//                        fadeIn.play();
+                    });
+                    fadeOut.play();
+                }
+            });
+            Scene scene = new Scene(stackPane, 400, 300); // 假设是你需要的大小
+            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
             fxPanel.setScene(scene);
         });
 

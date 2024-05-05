@@ -1,0 +1,67 @@
+.tree-cell>.tree-disclosure-node > .arrow {
+    -fx-padding: 5px 3px; /* 4 */
+    -fx-shape: none !important;
+    -fx-background-color: transparent;
+    -fx-background-image: url("../icons/arrow.png");
+    -fx-background-size: 0.9em;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-alignment: center !important;
+}
+.tree-cell>.tree-disclosure-node{
+    -fx-pref-height: 30px;
+}
+
+.method-get{
+    -fx-text-fill: #288a3f;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-pref-width: 45;
+    -fx-border-radius: 5;
+    -fx-alignment: center;
+}
+.method-post{
+    -fx-text-fill: #c08b43;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-pref-width: 45;
+    -fx-border-radius: 5;
+    -fx-alignment: center;
+}
+.method-put{
+    -fx-text-fill: #4271a6;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-pref-width: 45;
+    -fx-border-radius: 5;
+    -fx-alignment: center;
+}
+.method-del{
+    -fx-text-fill: #b7446d;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-pref-width: 45;
+    -fx-border-radius: 5;
+    -fx-alignment: center;
+}
+
+.tab-pane {
+    -fx-background-color: #030303; /* 设置TabPane的背景颜色 */
+}
+
+.tab {
+    -fx-background-color: #3498db; /* 设置Tab的背景颜色 */
+    -fx-background-radius: 5px; /* 设置Tab的圆角 */
+    -fx-border-color: #2980b9; /* 设置Tab的边框颜色 */
+    -fx-border-width: 1px; /* 设置Tab的边框宽度 */
+    -fx-border-radius: 5px; /* 设置Tab的边框圆角 */
+}
+
+.tab-label {
+    -fx-text-fill: #100f0f; /* 设置Tab标题的文本颜色 */
+    -fx-background-color: #3498db; /
+}
+
+.tab:selected {
+    -fx-background-color: #2980b9; /* 设置选中的Tab的背景颜色 */
+}

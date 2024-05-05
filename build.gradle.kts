@@ -12,10 +12,11 @@ repositories {
   mavenCentral()
 }
 dependencies {
-  implementation("org.openjfx:javafx-controls:22")
-  implementation("org.openjfx:javafx-swing:22")
+  implementation("org.openjfx:javafx-controls:17")
+  implementation("org.openjfx:javafx-swing:17")
   implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.3")
   implementation("com.google.code.gson:gson:2.8.9")
+  implementation("commons-beanutils:commons-beanutils:1.9.4")
 }
 javafx {
   version = "22"

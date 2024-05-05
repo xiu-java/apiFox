@@ -4,7 +4,7 @@ package com.example.apifox.model;
 public class Filed {
     private String type;
     private String title;
-    private  ChildrenFiled items;
+    private ChildrenFiled items;
     private String description;
     private Boolean nullable;
 

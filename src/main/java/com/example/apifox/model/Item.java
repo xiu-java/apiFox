@@ -4,6 +4,7 @@ public class Item {
     private Detail get;
     private Detail post;
     private Detail put;
+    private Detail delete;
 
     public Detail getPut() {
         return put;
@@ -29,4 +30,11 @@ public class Item {
         this.get = get;
     }
 
+    public Detail getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Detail delete) {
+        this.delete = delete;
+    }
 }

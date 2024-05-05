@@ -5,33 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cce6504e-3e92-40e0-aaac-c003116104ec" name="Changes" comment="请求接口">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataSourceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/SchemaVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/FileCell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/FolderCell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SchemaPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SourcePane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/arrow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/arrow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/toolWindow/Calendar-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/toolWindow/Time-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/toolWindow/Time-zone-icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/FileItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeItemVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Filed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Filed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/MethodType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/MethodType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Schema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/ApiServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/ApiServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/FileTreeCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/CustomTreeCell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/icons/apifox.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/icons/apifox.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -276,6 +251,9 @@
       <workItem from="1714840217767" duration="1744000" />
       <workItem from="1714842002119" duration="118000" />
       <workItem from="1714868959895" duration="1207000" />
+      <workItem from="1714870338895" duration="593000" />
+      <workItem from="1714870940239" duration="61000" />
+      <workItem from="1714871017261" duration="1530000" />
     </task>
     <task id="LOCAL-00001" summary="请求接口">
       <option name="closed" value="true" />
@@ -285,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714733408906</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="请求接口">
+      <option name="closed" value="true" />
+      <created>1714870614374</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714870614374</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class DataSourceServiceImpl implements DataSourceService {
-   private final Tree tree;
 
-   private final Map<String, List<TreeNode>> list = new HashMap<>();
+    private final Map<String, List<TreeNode>> list = new HashMap<>();
+
+    private Map<Long,List<ProjectVO>> projects;
 
     public static DataSourceService getInstance(Project project) {
         return project.getService(DataSourceService.class);
@@ -26,8 +28,12 @@ public class DataSourceServiceImpl implements DataSourceService {
 
     DataSourceServiceImpl(){
         ApiService apiService = ApiServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
-        this.tree = apiService.makeApiRequest("4282402");
-        this.analyzer(this.tree);
+        ResponseVO data =  apiService.getProject();
+        if(data.getSuccess()){
+            projects = data.getData().stream().collect(Collectors.groupingBy(ProjectVO::getTeamId));
+        }
+        Tree tree = apiService.makeApiRequest("4282402");
+        this.analyzer(tree);
     }
 
     private void analyzer(Tree data){

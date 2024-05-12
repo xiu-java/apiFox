@@ -20,7 +20,7 @@ public class DataSourceServiceImpl implements DataSourceService {
 
     private final Map<String, List<TreeNode>> list = new HashMap<>();
 
-    private Map<Long,List<ProjectVO>> projects;
+    private Map<Long,List<ProjectVO>> project;
 
     public static DataSourceService getInstance(Project project) {
         return project.getService(DataSourceService.class);
@@ -30,7 +30,7 @@ public class DataSourceServiceImpl implements DataSourceService {
         ApiService apiService = ApiServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
         ResponseVO data =  apiService.getProject();
         if(data.getSuccess()){
-            projects = data.getData().stream().collect(Collectors.groupingBy(ProjectVO::getTeamId));
+            project = data.getData().stream().collect(Collectors.groupingBy(ProjectVO::getTeamId));
         }
         Tree tree = apiService.makeApiRequest("4282402");
         this.analyzer(tree);
@@ -73,6 +73,11 @@ public class DataSourceServiceImpl implements DataSourceService {
                     this.list.computeIfAbsent(key, k -> new ArrayList<>()).add(node);
                 }
             }
+    }
+
+    @Override
+    public Map<Long,List<ProjectVO>> getProject() {
+        return this.project;
     }
 
     @Override

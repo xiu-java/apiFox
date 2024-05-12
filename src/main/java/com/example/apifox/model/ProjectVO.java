@@ -1,104 +1,87 @@
 package com.example.apifox.model;
 
 public class ProjectVO {
-    private String createdAt;
-    private Long creatorId;
-    private String description;
-    private Long editorId;
     private long id;
     private String name;
-    private Long roleType;
-    private Long strictMode;
     private Long teamId;
-    private String updatedAt;
+    private String description;
+    private Long roleType;
+    private Long ordering;
     private String visibility;
+    private String icon;
+    private String type;
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
 
-    public void setCreatedAt(String value) {
-        this.createdAt = value;
-    }
-
-    public Long getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(Long value) {
-        this.creatorId = value;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String value) {
-        this.description = value;
-    }
-
-    public Long getEditorId() {
-        return editorId;
-    }
-
-    public void setEditorId(Long value) {
-        this.editorId = value;
-    }
-
-    public long getid() {
+    public long getId() {
         return id;
     }
 
-    public void setid(long value) {
-        this.id = value;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String value) {
-        this.name = value;
-    }
-
-    public Long getRoleType() {
-        return roleType;
-    }
-
-    public void setRoleType(Long value) {
-        this.roleType = value;
-    }
-
-    public Long getStrictMode() {
-        return strictMode;
-    }
-
-    public void setStrictMode(Long value) {
-        this.strictMode = value;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(Long value) {
-        this.teamId = value;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUpdatedAt(String value) {
-        this.updatedAt = value;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(Long roleType) {
+        this.roleType = roleType;
+    }
+
+    public Long getOrdering() {
+        return ordering;
+    }
+
+    public void setOrdering(Long ordering) {
+        this.ordering = ordering;
     }
 
     public String getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(String value) {
-        this.visibility = value;
+    public void setVisibility(String visibility) {
+        this.visibility = visibility;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
 

@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cce6504e-3e92-40e0-aaac-c003116104ec" name="Changes" comment="feat:完善需求">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/Breadcrumb.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/RoundImageIcon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataSourceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataSourceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/ProjectVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/ProjectVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/ProjectPanel.form" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/ProjectPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/ProjectPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -324,6 +316,7 @@
       <workItem from="1715495387565" duration="22702000" />
       <workItem from="1715524590238" duration="1211000" />
       <workItem from="1715525835622" duration="237000" />
+      <workItem from="1715607111524" duration="4638000" />
     </task>
     <task id="LOCAL-00001" summary="请求接口">
       <option name="closed" value="true" />
@@ -366,7 +359,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="feat:完善需求" />
     <option name="LAST_COMMIT_MESSAGE" value="feat:完善需求" />
   </component>
   <component name="XDebuggerManager">
@@ -396,5 +388,10 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.github.lppedd.cc.CommitBuilderDialog">
+    <footers>
+      <entry type="" value="" />
+    </footers>
   </component>
 </project>

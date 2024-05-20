@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Body {
     private Schema schema;
-    private Map<String,String> example;
+    private Example example;
 
     public Schema getSchema() {
         return schema;
@@ -14,11 +14,11 @@ public class Body {
         this.schema = schema;
     }
 
-    public Map<String, String> getExample() {
+    public Example getExample() {
         return example;
     }
 
-    public void setExample(Map<String, String> example) {
+    public void setExample(Example example) {
         this.example = example;
     }
 }

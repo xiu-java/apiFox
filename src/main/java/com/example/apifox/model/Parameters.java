@@ -5,7 +5,7 @@ public class Parameters {
     private String in;
     private String description;
     private boolean required;
-    private String example;
+//    private String example;
     private Schema schema;
 
     public String getName() {
@@ -40,13 +40,13 @@ public class Parameters {
         this.required = required;
     }
 
-    public String getExample() {
-        return example;
-    }
-
-    public void setExample(String example) {
-        this.example = example;
-    }
+//    public String getExample() {
+//        return example;
+//    }
+//
+//    public void setExample(String example) {
+//        this.example = example;
+//    }
 
     public Schema getSchema() {
         return schema;

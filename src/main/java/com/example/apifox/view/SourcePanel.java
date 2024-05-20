@@ -1,9 +1,11 @@
 package com.example.apifox.view;
 
 import com.example.apifox.component.DataSourceService;
+import com.example.apifox.component.DataUpdateTopic;
 import com.example.apifox.model.TreeItemVO;
 import com.example.apifox.model.TreeNode;
 import com.intellij.openapi.project.ProjectManager;
+import com.intellij.util.messages.MessageBusConnection;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SourcePanel extends JTree {
+public class SourcePanel extends JTree implements DataUpdateTopic{
     public DefaultTreeModel model = new DefaultTreeModel(null);
 
     public SourcePanel() {
@@ -70,14 +72,16 @@ public class SourcePanel extends JTree {
             }
         });
         setRowHeight(0);
-        configUi();
+        MessageBusConnection connection = ProjectManager.getInstance().getDefaultProject().getMessageBus().connect();
+        connection.subscribe(DataUpdateTopic.DATA_UPDATE_TOPIC, this);
     }
 
 
 
-    private void configUi() {
-        DataSourceService service = ProjectManager.getInstance().getDefaultProject().getService(DataSourceService.class);
-        Map<String, List<TreeNode>> list = service.getDataSource();
+
+
+    @Override
+    public void dataUpdated(List<TreeNode> list) {
         TreeItemVO rootNode = new TreeItemVO();
         rootNode.setRoot(true);
         rootNode.setDirectory(true);
@@ -85,23 +89,33 @@ public class SourcePanel extends JTree {
         rootNode.setChildren(new ArrayList<>());
         DefaultMutableTreeNode rootItem = new DefaultMutableTreeNode(rootNode);
         treeModel = new DefaultTreeModel(rootItem);
-        for (Map.Entry<String, List<TreeNode>> entry : list.entrySet()) {
-            String folder = entry.getKey();
-            List<TreeNode> data = entry.getValue();
-            TreeItemVO folderNodeVO = new TreeItemVO();
-            folderNodeVO.setTitle(folder);
-            folderNodeVO.setDirectory(true);
-            folderNodeVO.setChildren(new ArrayList<>());
-            rootNode.getChildren().add(folderNodeVO);
-            DefaultMutableTreeNode folderItem = new DefaultMutableTreeNode(folderNodeVO);
-            rootItem.add(folderItem);
-            for (TreeNode treeNode : data) {
+        for (TreeNode entry : list) {
+            if(entry.getFolder()){
+                String folder = entry.getTitle();
+                List<TreeNode> data = entry.getChildren();
+                TreeItemVO folderNodeVO = new TreeItemVO();
+                folderNodeVO.setTitle(folder);
+                folderNodeVO.setDirectory(true);
+                folderNodeVO.setChildren(new ArrayList<>());
+                rootNode.getChildren().add(folderNodeVO);
+                DefaultMutableTreeNode folderItem = new DefaultMutableTreeNode(folderNodeVO);
+                rootItem.add(folderItem);
+                for (TreeNode treeNode : data) {
+                    TreeItemVO fileNodeVO = new TreeItemVO();
+                    fileNodeVO.setTitle(treeNode.getSummary());
+                    fileNodeVO.setNode(treeNode);
+                    folderNodeVO.getChildren().add(fileNodeVO);
+                    DefaultMutableTreeNode fileItem = new DefaultMutableTreeNode(fileNodeVO);
+                    folderItem.add(fileItem);
+                }
+            }else {
                 TreeItemVO fileNodeVO = new TreeItemVO();
-                fileNodeVO.setTitle(treeNode.getSummary());
-                fileNodeVO.setNode(treeNode);
-                folderNodeVO.getChildren().add(fileNodeVO);
+                fileNodeVO.setTitle(entry.getSummary());
+                fileNodeVO.setNode(entry);
+                fileNodeVO.setDirectory(false);
+                rootNode.getChildren().add(fileNodeVO);
                 DefaultMutableTreeNode fileItem = new DefaultMutableTreeNode(fileNodeVO);
-                folderItem.add(fileItem);
+                rootItem.add(fileItem);
             }
         }
         model.setRoot(rootItem);

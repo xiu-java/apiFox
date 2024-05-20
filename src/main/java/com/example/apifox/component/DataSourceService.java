@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface DataSourceService {
-   public Map<Long,List<ProjectVO>> getProject();
+    void upDateProjectById(Long projectId);
 
-    public Map<String, List<TreeNode>> getDataSource();
+    public Map<Long,List<ProjectVO>> getProject();
+
+    public List<TreeNode> getDataSource();
 }

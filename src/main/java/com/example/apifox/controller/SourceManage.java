@@ -1,22 +1,20 @@
 package com.example.apifox.controller;
 
-import com.example.apifox.view.Breadcrumb;
+import com.example.apifox.component.DataSourceService;
+import com.example.apifox.interfaces.ComponentDelegate;
 import com.example.apifox.view.ProjectPanel;
 import com.example.apifox.view.SourcePanel;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowContentUiType;
 import com.intellij.openapi.wm.ToolWindowFactory;
+import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 项目: idea-plugins
@@ -30,14 +28,16 @@ import java.util.List;
  * @author: WuChengXing
  * @create: 2022-02-24 13:31
  **/
-public class SourceManage implements ToolWindowFactory {
+public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long> {
+    private ToolWindow window;
+
+    private final JBScrollPane projectPanel = new JBScrollPane(new ProjectPanel(this));
+    private final JBScrollPane sourcePane =new JBScrollPane(new SourcePanel());
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        JScrollPane projectPanel = new JScrollPane(new ProjectPanel());
+        this.window = toolWindow;
         //创建JTree对象
-        JScrollPane sourcePane =new JScrollPane(new SourcePanel());
-
         // 获取内容工厂的实例
         ContentFactory contentFactory = ContentFactory.getInstance();
         // 创建内容
@@ -73,23 +73,17 @@ public class SourceManage implements ToolWindowFactory {
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(label2).addComponent(tf2));
         layout.setVerticalGroup(vGroup);
         Content c2 = contentFactory.createContent(panel, "Home", false);
-//        toolWindow.setDefaultContentUiType(ToolWindowContentUiType.TABBED);
-        // 设置 ToolWindow 显示的内容
         toolWindow.getContentManager().addContent(home);
         toolWindow.getContentManager().addContent(apis);
         toolWindow.getContentManager().addContent(c2);
-
-        // Initialize your JavaFX application here
-        // 确保在JavaFX应用程序线程上执行
     }
 
-    private JComponent createMyToolWindowContent() {
-        // 创建和返回工具窗口的主要内容
-        return new JLabel("This is my ToolWindow content");
+    @Override
+    public void onButtonClicked(Long projectId) {
+        Content currentContent = window.getContentManager().findContent("Apis");
+        window.getContentManager().setSelectedContent(currentContent);
+        DataSourceService service = ProjectManager.getInstance().getDefaultProject().getService(DataSourceService.class);
+        service.upDateProjectById(projectId);
     }
 
-    private JComponent createBreadcrumbsComponent() {
-        // 创建你自己的面包屑组件，这只是示例
-        return new JLabel("Breadcrumb1 > Breadcrumb2 > Breadcrumb3");
-    }
 }

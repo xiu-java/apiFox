@@ -1,8 +1,23 @@
 package com.example.apifox.model;
 
+import java.util.List;
+
 public class TreeNode  extends Detail{
-    private String url;
-    private MethodType method;
+    public String title;
+
+    public MethodType method;
+
+    public Boolean isFolder;
+
+    public List<TreeNode> children;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public MethodType getMethod() {
         return method;
@@ -12,11 +27,19 @@ public class TreeNode  extends Detail{
         this.method = method;
     }
 
-    public String getUrl() {
-        return url;
+    public Boolean getFolder() {
+        return isFolder;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setFolder(Boolean folder) {
+        isFolder = folder;
+    }
+
+    public List<TreeNode> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<TreeNode> children) {
+        this.children = children;
     }
 }

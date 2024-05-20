@@ -10,7 +10,7 @@ import java.util.Map;
 public class Tree{
     private Info info;
     private String openapi;
-    private Tag[] tags;
+    private List<Tag> tags;
     private Map<String, Item> paths = new HashMap<>();
     private Components components;
     private List<Any> servers;
@@ -31,11 +31,11 @@ public class Tree{
         this.openapi = openapi;
     }
 
-    public Tag[] getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Tag[] tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

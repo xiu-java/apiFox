@@ -2,6 +2,7 @@ package com.example.apifox.controller;
 
 import com.example.apifox.component.DataSourceService;
 import com.example.apifox.interfaces.ComponentDelegate;
+import com.example.apifox.view.LoadingPanel;
 import com.example.apifox.view.ProjectPanel;
 import com.example.apifox.view.SourcePanel;
 import com.intellij.openapi.project.Project;
@@ -15,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+
+import static java.lang.Thread.sleep;
 
 /**
  * 项目: idea-plugins
@@ -72,7 +75,11 @@ public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long> 
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(label1).addComponent(tf1));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(label2).addComponent(tf2));
         layout.setVerticalGroup(vGroup);
-        Content c2 = contentFactory.createContent(panel, "Home", false);
+        LoadingPanel s = new LoadingPanel();
+        s.setBounds(100, 100, 200, 200);
+        Content c2 = contentFactory.createContent(s, "Home", false);
+        s.setText("Loading data, Please wait ...");
+        s.start();
         toolWindow.getContentManager().addContent(home);
         toolWindow.getContentManager().addContent(apis);
         toolWindow.getContentManager().addContent(c2);
@@ -82,8 +89,13 @@ public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long> 
     public void onButtonClicked(Long projectId) {
         Content currentContent = window.getContentManager().findContent("Apis");
         window.getContentManager().setSelectedContent(currentContent);
-        DataSourceService service = ProjectManager.getInstance().getDefaultProject().getService(DataSourceService.class);
-        service.upDateProjectById(projectId);
+        // 后续代码放在一个新的线程中执行
+        new Thread(() -> {
+            // 这里是后续的代码
+            DataSourceService service = ProjectManager.getInstance().getDefaultProject().getService(DataSourceService.class);
+            service.upDateProjectById(projectId);
+        }).start();
+
     }
 
 }

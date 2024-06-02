@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cce6504e-3e92-40e0-aaac-c003116104ec" name="Changes" comment="feat:loading">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/test.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/LoadingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/LoadingPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SourcePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SourcePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,7 +338,7 @@
       <workItem from="1717293447353" duration="5340000" />
       <workItem from="1717317490765" duration="2463000" />
       <workItem from="1717326057457" duration="47000" />
-      <workItem from="1717326119786" duration="9538000" />
+      <workItem from="1717326119786" duration="12762000" />
     </task>
     <task id="LOCAL-00001" summary="请求接口">
       <option name="closed" value="true" />
@@ -397,7 +396,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717077309253</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat:loading">
+      <option name="closed" value="true" />
+      <created>1717340539350</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1717340539351</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -426,18 +433,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java</url>
-          <line>85</line>
+          <line>89</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java</url>
-          <line>114</line>
+          <line>115</line>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/apifox/view/SourcePanel.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -2,8 +2,10 @@ package com.example.apifox.model;
 
 import java.util.List;
 
-public class TreeNode  extends Detail{
+public class TreeNode {
     public String title;
+
+    public String tag;
 
     public MethodType method;
 
@@ -19,6 +21,14 @@ public class TreeNode  extends Detail{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public MethodType getMethod() {

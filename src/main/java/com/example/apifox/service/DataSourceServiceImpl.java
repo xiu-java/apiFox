@@ -40,20 +40,22 @@ public final class DataSourceServiceImpl implements DataSourceService {
 
 
     private void analyzer(Tree data) {
-        LinkedHashMap<String,TreeNode>  trees = new LinkedHashMap<>();
+        List<TreeNode>  trees = new ArrayList<>();
        for (Tag tag:data.getTags()){
            String tagName = tag.getName();
            if (tagName.contains("/")) {
                String[] items = tagName.split("/");
                TreeNode treeItem;
-               if(trees.containsKey(items[0])){
-                   treeItem = trees.get(items[0]);
+               Optional<TreeNode> tree = trees.stream().filter(t->t.getTitle().equals(items[0])).findFirst();
+               if(tree.isPresent()){
+                   treeItem = tree.get();
                }else {
                    TreeNode node = new TreeNode();
                    node.title = items[0];
                    node.isFolder = true;
+                   node.setTag(tagName);
                    node.children = new ArrayList<>();
-                   trees.put(items[0], node);
+                   trees.add(node);
                    treeItem = node;
                }
                int index = 1;
@@ -69,6 +71,7 @@ public final class DataSourceServiceImpl implements DataSourceService {
                        TreeNode node = new TreeNode();
                        node.title = items[finalIndex];
                        node.isFolder = true;
+                       node.setTag(tagName);
                        node.children = new ArrayList<>();
                        treeItem.children.add(node);
                        treeItem = node;
@@ -78,51 +81,51 @@ public final class DataSourceServiceImpl implements DataSourceService {
            } else {
                TreeNode node = new TreeNode();
                node.title = tag.getName();
+               node.setTag(tagName);
                node.isFolder = true;
                node.children = new ArrayList<>();
-               trees.put(tag.getName(), node);
+               trees.add(node);
            }
        }
         for (Map.Entry<String, Item> entry : data.getPaths().entrySet()) {
-            String url = entry.getKey();
             Item item = entry.getValue();
             TreeNode node = new TreeNode();
             node.setFolder(false);
-            node.setTitle(url);
             if (item.getGet() != null) {
                 node.setMethod(MethodType.GET);
                 Detail detail = item.getGet();
-                copyNode(detail, trees, node);
+                copyNode(detail,trees,node);
             }
             if (item.getPost() != null) {
                 node.setMethod(MethodType.POST);
                 Detail detail = item.getPost();
-                copyNode(detail, trees, node);
-
+                copyNode(detail,trees,node);
             }
             if (item.getPut() != null) {
                 node.setMethod(MethodType.PUT);
                 Detail detail = item.getPut();
-                copyNode(detail, trees, node);
+                copyNode(detail,trees,node);
             }
             if (item.getDelete() != null) {
                 node.setMethod(MethodType.DELETE);
                 Detail detail = item.getDelete();
-                copyNode(detail, trees, node);
+                copyNode(detail,trees,node);
             }
         }
-        this.list = new ArrayList<>(trees.values());
+        this.list = trees;
         DataUpdateTopic publisher = messageBus.syncPublisher(DataUpdateTopic.DATA_UPDATE_TOPIC);
         publisher.dataUpdated(this.list);
     }
 
-    private static void copyNode(Detail detail, Map<String, TreeNode> tree, TreeNode node) {
+    private static void copyNode(Detail detail, List<TreeNode> tree, TreeNode node) {
         String key = detail.getTags().isEmpty() ? "root" : detail.getTags().get(0);
+        node.setTitle(detail.getSummary());
         node.setDetail(detail);
-        if (tree.containsKey(key)) {
-            tree.get(key).children.add(node);
+        Optional<TreeNode> item = tree.stream().filter(v->v.getTitle().equals(key)).findFirst();
+        if (item.isPresent()) {
+            item.get().children.add(node);
         } else {
-            tree.put(node.getTitle(), node);
+            tree.add(node);
         }
     }
 

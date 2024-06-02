@@ -102,7 +102,7 @@ public class SourcePanel extends JTree implements DataUpdateTopic{
                 rootItem.add(folderItem);
                 for (TreeNode treeNode : data) {
                     TreeItemVO fileNodeVO = new TreeItemVO();
-                    fileNodeVO.setTitle(treeNode.getSummary());
+                    fileNodeVO.setTitle(treeNode.getTitle());
                     fileNodeVO.setNode(treeNode);
                     folderNodeVO.getChildren().add(fileNodeVO);
                     DefaultMutableTreeNode fileItem = new DefaultMutableTreeNode(fileNodeVO);
@@ -110,7 +110,7 @@ public class SourcePanel extends JTree implements DataUpdateTopic{
                 }
             }else {
                 TreeItemVO fileNodeVO = new TreeItemVO();
-                fileNodeVO.setTitle(entry.getSummary());
+                fileNodeVO.setTitle(entry.getTitle());
                 fileNodeVO.setNode(entry);
                 fileNodeVO.setDirectory(false);
                 rootNode.getChildren().add(fileNodeVO);

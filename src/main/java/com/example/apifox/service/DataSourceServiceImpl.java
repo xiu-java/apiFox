@@ -12,9 +12,7 @@ import com.intellij.util.messages.MessageBus;
 import static org.apache.commons.beanutils.BeanUtils.copyProperties;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -42,13 +40,49 @@ public final class DataSourceServiceImpl implements DataSourceService {
 
 
     private void analyzer(Tree data) {
-        Map<String,TreeNode> tree = data.getTags().stream().map(str -> {
-            TreeNode node = new TreeNode();
-            node.title = str.getName();
-            node.isFolder = true;
-            node.children = new ArrayList<>();
-            return node;
-        }).collect(Collectors.toMap(TreeNode::getTitle,p->p));
+        LinkedHashMap<String,TreeNode>  trees = new LinkedHashMap<>();
+       for (Tag tag:data.getTags()){
+           String tagName = tag.getName();
+           if (tagName.contains("/")) {
+               String[] items = tagName.split("/");
+               TreeNode treeItem;
+               if(trees.containsKey(items[0])){
+                   treeItem = trees.get(items[0]);
+               }else {
+                   TreeNode node = new TreeNode();
+                   node.title = items[0];
+                   node.isFolder = true;
+                   node.children = new ArrayList<>();
+                   trees.put(items[0], node);
+                   treeItem = node;
+               }
+               int index = 1;
+               while (index < items.length) {
+                   if(items[index].equals("deprecated")){
+                       continue;
+                   }
+                   int finalIndex = index;
+                   Optional<TreeNode> item = treeItem.children.stream().filter(v->v.getTitle().equals(items[finalIndex])).findFirst();
+                   if(item.isPresent()){
+                       treeItem = item.get();
+                   }else {
+                       TreeNode node = new TreeNode();
+                       node.title = items[finalIndex];
+                       node.isFolder = true;
+                       node.children = new ArrayList<>();
+                       treeItem.children.add(node);
+                       treeItem = node;
+                   }
+                   index = index + 1;
+               }
+           } else {
+               TreeNode node = new TreeNode();
+               node.title = tag.getName();
+               node.isFolder = true;
+               node.children = new ArrayList<>();
+               trees.put(tag.getName(), node);
+           }
+       }
         for (Map.Entry<String, Item> entry : data.getPaths().entrySet()) {
             String url = entry.getKey();
             Item item = entry.getValue();
@@ -58,41 +92,37 @@ public final class DataSourceServiceImpl implements DataSourceService {
             if (item.getGet() != null) {
                 node.setMethod(MethodType.GET);
                 Detail detail = item.getGet();
-                copyNode(detail, tree, node);
+                copyNode(detail, trees, node);
             }
             if (item.getPost() != null) {
                 node.setMethod(MethodType.POST);
                 Detail detail = item.getPost();
-                copyNode(detail, tree, node);
+                copyNode(detail, trees, node);
 
             }
             if (item.getPut() != null) {
                 node.setMethod(MethodType.PUT);
                 Detail detail = item.getPut();
-                copyNode(detail, tree, node);
+                copyNode(detail, trees, node);
             }
             if (item.getDelete() != null) {
                 node.setMethod(MethodType.DELETE);
                 Detail detail = item.getDelete();
-                copyNode(detail, tree, node);
+                copyNode(detail, trees, node);
             }
         }
-        this.list = new ArrayList<>(tree.values());
+        this.list = new ArrayList<>(trees.values());
         DataUpdateTopic publisher = messageBus.syncPublisher(DataUpdateTopic.DATA_UPDATE_TOPIC);
         publisher.dataUpdated(this.list);
     }
 
     private static void copyNode(Detail detail, Map<String, TreeNode> tree, TreeNode node) {
         String key = detail.getTags().isEmpty() ? "root" : detail.getTags().get(0);
+        node.setDetail(detail);
         if (tree.containsKey(key)) {
             tree.get(key).children.add(node);
         } else {
             tree.put(node.getTitle(), node);
-        }
-        try {
-            copyProperties(node, detail);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
         }
     }
 

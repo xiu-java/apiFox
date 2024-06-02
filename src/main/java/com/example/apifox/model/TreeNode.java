@@ -9,6 +9,8 @@ public class TreeNode  extends Detail{
 
     public Boolean isFolder;
 
+    public Detail detail;
+
     public List<TreeNode> children;
 
     public String getTitle() {
@@ -41,5 +43,13 @@ public class TreeNode  extends Detail{
 
     public void setChildren(List<TreeNode> children) {
         this.children = children;
+    }
+
+    public Detail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(Detail detail) {
+        this.detail = detail;
     }
 }

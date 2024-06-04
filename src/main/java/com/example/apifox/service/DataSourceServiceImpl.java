@@ -125,7 +125,21 @@ public final class DataSourceServiceImpl implements DataSourceService {
         if (item.isPresent()) {
             item.get().children.add(node);
         } else {
-            tree.add(node);
+            if(key.contains('/')){
+                String[] items = key.split("/");
+                List<TreeNode> childrens = trees;
+                for(String item:items){
+                    Optional<TreeNode> tag = childrens.stream().filter(v->v.getTitle().equals(items[0])).findFirst();
+                    if(tag.isPresent()){
+                        childrens = tag.children
+                    }else {
+                        break;
+                    }
+                }
+                childrens.add(node);
+            }else{
+                tree.add(node);
+            }
         }
     }
 

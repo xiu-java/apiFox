@@ -35,4 +35,7 @@
     <toolWindow id="apifox" secondary="false" anchor="right" icon="/icons/apifox.png"
                 factoryClass="com.example.apifox.controller.SourceManage"/>
   </extensions>
+<!--  <projectListeners>-->
+<!--    <listener class="com.example.apifox.view.SourcePanel" topic="com.example.apifox.component.DataUpdateTopic"/>-->
+<!--  </projectListeners>-->
 </idea-plugin>

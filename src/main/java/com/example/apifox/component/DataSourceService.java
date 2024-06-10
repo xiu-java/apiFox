@@ -2,6 +2,7 @@ package com.example.apifox.component;
 
 
 import com.example.apifox.model.ProjectVO;
+import com.example.apifox.model.Tree;
 import com.example.apifox.model.TreeNode;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface DataSourceService {
 
     public Map<Long,List<ProjectVO>> getProject();
 
-    public List<TreeNode> getDataSource();
+    public Tree getDataSource();
 }

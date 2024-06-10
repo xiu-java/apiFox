@@ -1,40 +1,8 @@
 package com.example.apifox.model;
 
-public class Item {
-    private Detail get;
-    private Detail post;
-    private Detail put;
-    private Detail delete;
+import java.util.ArrayList;
 
-    public Detail getPut() {
-        return put;
-    }
+public class Item extends ArrayList<Detail> {
 
-    public void setPut(Detail put) {
-        this.put = put;
-    }
 
-    public Detail getPost() {
-        return post;
-    }
-
-    public void setPost(Detail post) {
-        this.post = post;
-    }
-
-    public Detail getGet() {
-        return get;
-    }
-
-    public void setGet(Detail get) {
-        this.get = get;
-    }
-
-    public Detail getDelete() {
-        return delete;
-    }
-
-    public void setDelete(Detail delete) {
-        this.delete = delete;
-    }
 }

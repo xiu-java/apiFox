@@ -1,13 +1,15 @@
 package com.example.apifox.model;
 
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.List;
 
 public class TreeItemVO {
     private String title;
     private boolean isDirectory = false;
     private boolean isRoot = false;
-    private TreeNode node;
+    private Detail node;
+    private DefaultMutableTreeNode treeNode;
     private List<TreeItemVO> children;
 
     public String getTitle() {
@@ -34,12 +36,20 @@ public class TreeItemVO {
         isRoot = root;
     }
 
-    public TreeNode getNode() {
+    public Detail getNode() {
         return node;
     }
 
-    public void setNode(TreeNode node) {
+    public void setNode(Detail node) {
         this.node = node;
+    }
+
+    public DefaultMutableTreeNode getTreeNode() {
+        return treeNode;
+    }
+
+    public void setTreeNode(DefaultMutableTreeNode treeNode) {
+        this.treeNode = treeNode;
     }
 
     public List<TreeItemVO> getChildren() {

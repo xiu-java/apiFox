@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Detail {
+    private String url;
     private String summary;
     private boolean deprecated;
     private String description;
+    private MethodType method;
     private List<String> tags;
     private List<Parameters> parameters;
     private RequestBody requestBody;
@@ -21,6 +23,14 @@ public class Detail {
     private String xApifoxStatus;
     @SerializedName("x-run-in-apifox")
     private String xRunInApifox;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getSummary() {
         return summary;
@@ -44,6 +54,14 @@ public class Detail {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public MethodType getMethod() {
+        return method;
+    }
+
+    public void setMethod(MethodType method) {
+        this.method = method;
     }
 
     public List<String> getTags() {

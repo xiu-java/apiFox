@@ -18,8 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 public final class DataSourceServiceImpl implements DataSourceService {
-    private final MessageBus messageBus;
-    private List<TreeNode> list = new ArrayList<>();
+    private Tree list;
 
     private Map<Long, List<ProjectVO>> project;
 
@@ -28,7 +27,6 @@ public final class DataSourceServiceImpl implements DataSourceService {
     }
 
     DataSourceServiceImpl() {
-        messageBus = ProjectManager.getInstance().getDefaultProject().getMessageBus();
         ApiService apiService = ApiServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
         ResponseVO data = apiService.getProject();
         if (data.getSuccess()) {
@@ -39,110 +37,6 @@ public final class DataSourceServiceImpl implements DataSourceService {
     }
 
 
-    private void analyzer(Tree data) {
-        List<TreeNode>  trees = new ArrayList<>();
-       for (Tag tag:data.getTags()){
-           String tagName = tag.getName();
-           if (tagName.contains("/")) {
-               String[] items = tagName.split("/");
-               TreeNode treeItem;
-               Optional<TreeNode> tree = trees.stream().filter(t->t.getTitle().equals(items[0])).findFirst();
-               if(tree.isPresent()){
-                   treeItem = tree.get();
-               }else {
-                   TreeNode node = new TreeNode();
-                   node.title = items[0];
-                   node.isFolder = true;
-                   node.setTag(tagName);
-                   node.children = new ArrayList<>();
-                   trees.add(node);
-                   treeItem = node;
-               }
-               int index = 1;
-               while (index < items.length) {
-                   if(items[index].equals("deprecated")){
-                       continue;
-                   }
-                   int finalIndex = index;
-                   Optional<TreeNode> item = treeItem.children.stream().filter(v->v.getTitle().equals(items[finalIndex])).findFirst();
-                   if(item.isPresent()){
-                       treeItem = item.get();
-                   }else {
-                       TreeNode node = new TreeNode();
-                       node.title = items[finalIndex];
-                       node.isFolder = true;
-                       node.setTag(tagName);
-                       node.children = new ArrayList<>();
-                       treeItem.children.add(node);
-                       treeItem = node;
-                   }
-                   index = index + 1;
-               }
-           } else {
-               TreeNode node = new TreeNode();
-               node.title = tag.getName();
-               node.setTag(tagName);
-               node.isFolder = true;
-               node.children = new ArrayList<>();
-               trees.add(node);
-           }
-       }
-        for (Map.Entry<String, Item> entry : data.getPaths().entrySet()) {
-            Item item = entry.getValue();
-            TreeNode node = new TreeNode();
-            node.setFolder(false);
-            if (item.getGet() != null) {
-                node.setMethod(MethodType.GET);
-                Detail detail = item.getGet();
-                copyNode(detail,trees,node);
-            }
-            if (item.getPost() != null) {
-                node.setMethod(MethodType.POST);
-                Detail detail = item.getPost();
-                copyNode(detail,trees,node);
-            }
-            if (item.getPut() != null) {
-                node.setMethod(MethodType.PUT);
-                Detail detail = item.getPut();
-                copyNode(detail,trees,node);
-            }
-            if (item.getDelete() != null) {
-                node.setMethod(MethodType.DELETE);
-                Detail detail = item.getDelete();
-                copyNode(detail,trees,node);
-            }
-        }
-        this.list = trees;
-        DataUpdateTopic publisher = messageBus.syncPublisher(DataUpdateTopic.DATA_UPDATE_TOPIC);
-        publisher.dataUpdated(this.list);
-    }
-
-    private static void copyNode(Detail detail, List<TreeNode> tree, TreeNode node) {
-        String key = detail.getTags().isEmpty() ? "root" : detail.getTags().get(0);
-        node.setTitle(detail.getSummary());
-        node.setDetail(detail);
-        Optional<TreeNode> item = tree.stream().filter(v->v.getTitle().equals(key)).findFirst();
-        if (item.isPresent()) {
-            item.get().children.add(node);
-        } else {
-            if(key.contains('/')){
-                String[] items = key.split("/");
-                List<TreeNode> childrens = trees;
-                for(String item:items){
-                    Optional<TreeNode> tag = childrens.stream().filter(v->v.getTitle().equals(items[0])).findFirst();
-                    if(tag.isPresent()){
-                        childrens = tag.children
-                    }else {
-                        break;
-                    }
-                }
-                childrens.add(node);
-            }else{
-                tree.add(node);
-            }
-        }
-    }
-
     @Override
     public void upDateProjectById(Long projectId) {
         ApiService apiService = ApiServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
@@ -150,7 +44,9 @@ public final class DataSourceServiceImpl implements DataSourceService {
         future.thenAccept(tree -> {
             // 在异步操作完成后处理结果
             if (tree != null) {
-                this.analyzer(tree);
+                DataUpdateTopic publisher = ProjectManager.getInstance().getDefaultProject().getMessageBus().syncPublisher(DataUpdateTopic.DATA_UPDATE_TOPIC);
+                this.list = tree;
+                publisher.dataUpdated(tree);
             } else {
                 System.out.println("API request failed.");
             }
@@ -165,7 +61,7 @@ public final class DataSourceServiceImpl implements DataSourceService {
     }
 
     @Override
-    public  List<TreeNode> getDataSource() {
+    public  Tree getDataSource() {
         return this.list;
     }
 }

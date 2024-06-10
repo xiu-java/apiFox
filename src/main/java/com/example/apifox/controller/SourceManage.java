@@ -2,9 +2,9 @@ package com.example.apifox.controller;
 
 import com.example.apifox.component.DataSourceService;
 import com.example.apifox.interfaces.ComponentDelegate;
-import com.example.apifox.view.LoadingPanel;
-import com.example.apifox.view.ProjectPanel;
-import com.example.apifox.view.SourcePanel;
+import com.example.apifox.interfaces.DetailDelegate;
+import com.example.apifox.model.Detail;
+import com.example.apifox.view.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.wm.ToolWindow;
@@ -31,11 +31,12 @@ import static java.lang.Thread.sleep;
  * @author: WuChengXing
  * @create: 2022-02-24 13:31
  **/
-public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long> {
+public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long>, DetailDelegate {
     private ToolWindow window;
 
-    private final JBScrollPane projectPanel = new JBScrollPane(new ProjectPanel(this));
-    private final JBScrollPane sourcePane =new JBScrollPane(new SourcePanel());
+    private final ProjectPanel projectPanel = new ProjectPanel(this);
+    private final ApiPanel apiPanel = new ApiPanel(this);
+    private final DetailPanel detailPanel = new DetailPanel();
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
@@ -44,45 +45,12 @@ public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long> 
         // 获取内容工厂的实例
         ContentFactory contentFactory = ContentFactory.getInstance();
         // 创建内容
-        Content home = contentFactory.createContent(projectPanel, "Home", false);
-        Content apis = contentFactory.createContent(sourcePane, "Apis", false);
-        //定义分组组件
-        JLabel label1 = new JLabel("账号名");
-        label1.setFont(new Font("黑体", Font.PLAIN,20));
-        JLabel label2 = new JLabel("密码");
-        label2.setFont(new Font("黑体", Font.PLAIN,20));
-        JPasswordField tf2 = new JPasswordField();
-        tf2.setPreferredSize(new Dimension(0,25));
-        JTextField tf1 = new JTextField();
-        tf1.setPreferredSize(new Dimension(0,25));
-        //分组布局的容器
-        JPanel panel = new JPanel();
-        GroupLayout layout = new GroupLayout(panel);
-        panel.setLayout(layout);
-        //是否自动添加组件之间的间隙
-        layout.setAutoCreateGaps(true);
-        //是否自动在接触容器边缘的组件和容器之间创建间隙。
-        layout.setAutoCreateContainerGaps(true);
-        //为水平轴创建顺序组。
-        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-        //顺序组依次包含两个平行组。
-        hGroup.addGroup(layout.createParallelGroup().addComponent(label1).addComponent(label2));
-        hGroup.addGroup(layout.createParallelGroup().addComponent(tf1).addComponent(tf2));
-        layout.setHorizontalGroup(hGroup);
-        //为垂直轴创建一个顺序组。
-        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-        //顺序组包含两个对齐的并行组
-        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(label1).addComponent(tf1));
-        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(label2).addComponent(tf2));
-        layout.setVerticalGroup(vGroup);
-        LoadingPanel s = new LoadingPanel();
-        s.setBounds(100, 100, 200, 200);
-        Content c2 = contentFactory.createContent(s, "Home", false);
-        s.setText("Loading data, Please wait ...");
-        s.start();
+        Content home = contentFactory.createContent(new JBScrollPane(projectPanel), "Home", false);
+        Content apis = contentFactory.createContent(apiPanel, "Apis", false);
+        Content detail = contentFactory.createContent(detailPanel, "Detail", false);
         toolWindow.getContentManager().addContent(home);
         toolWindow.getContentManager().addContent(apis);
-        toolWindow.getContentManager().addContent(c2);
+        toolWindow.getContentManager().addContent(detail);
     }
 
     @Override
@@ -92,10 +60,15 @@ public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long> 
         // 后续代码放在一个新的线程中执行
         new Thread(() -> {
             // 这里是后续的代码
-            DataSourceService service = ProjectManager.getInstance().getDefaultProject().getService(DataSourceService.class);
-            service.upDateProjectById(projectId);
+            apiPanel.open(projectId);
         }).start();
 
     }
 
+    @Override
+    public void onDetailClick(Detail detail) {
+        Content currentContent = window.getContentManager().findContent("Detail");
+        window.getContentManager().setSelectedContent(currentContent);
+        detailPanel.open(detail);
+    }
 }

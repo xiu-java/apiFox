@@ -2,9 +2,11 @@ package com.example.apifox.service;
 
 import com.example.apifox.component.ApiService;
 import com.example.apifox.model.Example;
+import com.example.apifox.model.Item;
 import com.example.apifox.model.ResponseVO;
 import com.example.apifox.model.Tree;
 import com.example.apifox.utils.ExampleDeserializer;
+import com.example.apifox.utils.ItemDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.intellij.ide.util.PropertiesComponent;
@@ -21,6 +23,7 @@ public final class ApiServiceImpl implements ApiService {
     final OkHttpClient client = new OkHttpClient();
     final private Gson gson = new GsonBuilder()
             .registerTypeAdapter(Example.class, new ExampleDeserializer())
+            .registerTypeAdapter(Item.class, new ItemDeserializer())
             .create();
     private final String token;
     MediaType JSON = MediaType.get("application/json; charset=utf-8");

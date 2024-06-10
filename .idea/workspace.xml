@@ -5,10 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cce6504e-3e92-40e0-aaac-c003116104ec" name="Changes" comment="feat:loading">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/interfaces/DetailDelegate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/utils/ItemDeserializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/ApiPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/DetailPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataSourceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataSourceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataUpdateTopic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataUpdateTopic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Detail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Detail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/MethodType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/MethodType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeItemVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeItemVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/ApiServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/ApiServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/LoadingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/LoadingPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SourcePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SourcePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,6 +228,7 @@
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.apifox.utils" />
       <recent name="com.example.apifox.view" />
       <recent name="com.example.apifox.controller" />
       <recent name="com.example.apifox.model" />
@@ -338,7 +352,19 @@
       <workItem from="1717293447353" duration="5340000" />
       <workItem from="1717317490765" duration="2463000" />
       <workItem from="1717326057457" duration="47000" />
-      <workItem from="1717326119786" duration="12762000" />
+      <workItem from="1717326119786" duration="13255000" />
+      <workItem from="1717416247915" duration="255000" />
+      <workItem from="1717511394221" duration="3156000" />
+      <workItem from="1717595888179" duration="2420000" />
+      <workItem from="1717678367411" duration="722000" />
+      <workItem from="1717682789776" duration="6833000" />
+      <workItem from="1717767205965" duration="9698000" />
+      <workItem from="1717818302256" duration="7410000" />
+      <workItem from="1717834790943" duration="803000" />
+      <workItem from="1717836042831" duration="79000" />
+      <workItem from="1717836412418" duration="15918000" />
+      <workItem from="1717899152080" duration="26532000" />
+      <workItem from="1717988024171" duration="12104000" />
     </task>
     <task id="LOCAL-00001" summary="请求接口">
       <option name="closed" value="true" />
@@ -404,7 +430,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717340539351</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat:loading">
+      <option name="closed" value="true" />
+      <created>1717343698636</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1717343698636</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,14 +466,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java</url>
-          <line>89</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java</url>
-          <line>115</line>
-          <option name="timeStamp" value="9" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/apifox/view/DetailPanel.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -449,6 +478,9 @@
         <PinnedItemInfo parentTag="com.example.apifox.model.Content" memberName="body" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Schema" memberName="description" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Item" memberName="post" />
+        <PinnedItemInfo parentTag="com.example.apifox.model.TreeItemVO" memberName="children" />
+        <PinnedItemInfo parentTag="javax.swing.tree.TreePath" memberName="lastPathComponent" />
+        <PinnedItemInfo parentTag="javax.swing.tree.DefaultMutableTreeNode" memberName="children" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Detail" memberName="parameters" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Tree" memberName="tags" />
       </pinned-members>

@@ -15,14 +15,16 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.Serial;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-public class LoadingPanel extends JComponent implements MouseListener {
+public class LoadingPanel extends JComponent {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 1L;
     protected Area[] ticker = null;
     protected Thread animation = null;
@@ -78,7 +80,6 @@ public class LoadingPanel extends JComponent implements MouseListener {
     }
 
     public void start() {
-        addMouseListener(this);
         setVisible(true);
         ticker = buildTicker();
         animation = new Thread(new Animator(true));
@@ -99,7 +100,6 @@ public class LoadingPanel extends JComponent implements MouseListener {
             animation.interrupt();
             animation = null;
 
-            removeMouseListener(this);
             setVisible(false);
         }
     }
@@ -236,29 +236,8 @@ public class LoadingPanel extends JComponent implements MouseListener {
                 repaint();
 
                 setVisible(false);
-                removeMouseListener(LoadingPanel.this);
             }
         }
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.apifox.view;
 
+import com.intellij.openapi.util.NlsContexts;
 import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.treeStructure.treetable.ListTreeTableModelOnColumns;
 import com.intellij.ui.treeStructure.treetable.TreeTable;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.*;
 
 
 public class SchemaSection extends JBPanel {
@@ -31,6 +33,10 @@ public class SchemaSection extends JBPanel {
                         return myTreeNode.getColumn1();
                     }
 
+                    @Override
+                    public @NlsContexts.ColumnName String getName() {
+                        return "kkk";
+                    }
                 },
                 new ColumnInfo<MyTreeNode,String>("Column 2") {
 
@@ -48,6 +54,8 @@ public class SchemaSection extends JBPanel {
         };
         ListTreeTableModelOnColumns model = new ListTreeTableModelOnColumns(root, columns);
         TreeTable treeTable = new TreeTable(model);
+        treeTable.setPreferredSize(new Dimension(400, 400));
+        treeTable.setRootVisible(true); // 设置根节点是否可见
         add(treeTable);
     }
 

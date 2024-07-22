@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cce6504e-3e92-40e0-aaac-c003116104ec" name="Changes" comment="feat:next">
+    <list default="true" id="cce6504e-3e92-40e0-aaac-c003116104ec" name="Changes" comment="feat:升级样式">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/MyTreeNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/MyTreeTableModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SchemaSection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/DetailPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/DetailPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,40 +154,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Run Plugin.executor": "Run",
-    "Gradle.apifox [buildPlugin].executor": "Debug",
-    "Gradle.apifox [clean].executor": "Run",
-    "Gradle.apifox [runIde].executor": "Run",
-    "Gradle.apifox [setupDependencies].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "772",
-    "git-widget-placeholder": "main",
-    "jdk.selected.JAVA_MODULE": "azul-21",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "/Users/luodexun/Documents/apifox/src/main/java/com/example/apifox",
-    "last_opened_file_path": "/Users/luodexun/Documents/code/java/owner/apifox",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.4402299",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Run Plugin.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.apifox [buildPlugin].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.apifox [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.apifox [runIde].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.apifox [setupDependencies].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;772&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;azul-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;/Users/luodexun/Documents/apifox/src/main/java/com/example/apifox&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/luodexun/Documents/code/java/owner/apifox&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.4402299&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "kotlin-gradle-user-dirs": [
-      "/Users/luodexun/.gradle"
+  &quot;keyToStringList&quot;: {
+    &quot;kotlin-gradle-user-dirs&quot;: [
+      &quot;/Users/luodexun/.gradle&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/com/example/apifox/view" />
@@ -341,7 +343,13 @@
       <workItem from="1717988024171" duration="12104000" />
       <workItem from="1718035587350" duration="79000" />
       <workItem from="1718808696026" duration="231000" />
-      <workItem from="1721048100425" duration="4283000" />
+      <workItem from="1721048100425" duration="5861000" />
+      <workItem from="1721132028505" duration="5483000" />
+      <workItem from="1721398952077" duration="5380000" />
+      <workItem from="1721447678956" duration="3263000" />
+      <workItem from="1721540174049" duration="14000" />
+      <workItem from="1721574208393" duration="3150000" />
+      <workItem from="1721651858690" duration="4591000" />
     </task>
     <task id="LOCAL-00001" summary="请求接口">
       <option name="closed" value="true" />
@@ -423,7 +431,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718035624439</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="feat:升级样式">
+      <option name="closed" value="true" />
+      <created>1721055204742</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1721055204742</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -446,7 +462,8 @@
     <MESSAGE value="feat:完善需求" />
     <MESSAGE value="feat:loading" />
     <MESSAGE value="feat:next" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:next" />
+    <MESSAGE value="feat:升级样式" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:升级样式" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

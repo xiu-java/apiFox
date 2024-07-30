@@ -3,25 +3,28 @@ package com.example.apifox.view;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class MyTreeNode extends DefaultMutableTreeNode {
-    private String column1;
-    private String column2;
-    private String column3;
+    private String name;
+    private String value;
 
-    public MyTreeNode(String column1, String column2, String column3) {
-        this.column1 = column1;
-        this.column2 = column2;
-        this.column3 = column3;
+    public MyTreeNode(String name, String value) {
+        this.name = name;
+        this.value = value;
     }
 
-    public String getColumn1() {
-        return column1;
+    @Override
+    public String toString() {
+        return name; // 在树中显示的节点名称
     }
 
-    public String getColumn2() {
-        return column2;
+    public String getValue() {
+        return value; // 可以在表格中显示的其他信息
     }
 
-    public String getColumn3() {
-        return column3;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

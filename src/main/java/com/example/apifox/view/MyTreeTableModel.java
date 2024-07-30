@@ -1,5 +1,6 @@
 package com.example.apifox.view;
 
+import com.intellij.openapi.util.NlsContexts;
 import com.intellij.ui.treeStructure.treetable.TreeTableModel;
 
 import javax.swing.*;
@@ -8,36 +9,35 @@ import javax.swing.tree.TreePath;
 
 public class MyTreeTableModel implements TreeTableModel {
 
-    private Object root;
+    private MyTreeNode root;
 
-    public MyTreeTableModel(Object root) {
-        this.root = root;
+    public MyTreeTableModel() {
+        root = createTreeNodes(); // 创建树的根节点和子节点
     }
 
-    @Override
-    public int getColumnCount() {
-        return 3; // 假设有三列
-    }
+    private MyTreeNode createTreeNodes() {
+        MyTreeNode rootNode = new MyTreeNode("Root", "");
 
-    @Override
-    public String getColumnName(int column) {
-        switch (column) {
-            case 0: return "Column 1";
-            case 1: return "Column 2";
-            case 2: return "Column 3";
-            default: return "Unknown";
-        }
-    }
+        MyTreeNode child1 = new MyTreeNode("Child 1", "Value 1");
+        MyTreeNode child2 = new MyTreeNode("Child 2", "Value 2");
 
-    @Override
-    public Class getColumnClass(int column) {
-        return null;
+        rootNode.add(child1);
+        rootNode.add(child2);
+
+        return rootNode; // 返回树结构
     }
 
     @Override
     public Object getValueAt(Object node, int column) {
-        // 实现获取值的逻辑
-        return "Data"; // 仅作示例
+        if (node instanceof MyTreeNode) {
+            MyTreeNode treeNode = (MyTreeNode) node;
+            if (column == 0) {
+                return treeNode.toString(); // 第一列是节点名称
+            } else {
+                return treeNode.getValue(); // 第二列是节点的值
+            }
+        }
+        return null;
     }
 
     @Override
@@ -56,32 +56,48 @@ public class MyTreeTableModel implements TreeTableModel {
     }
 
     @Override
-    public Object getRoot() {
-        return root;
+    public int getColumnCount() {
+        return 2; // 列数
+    }
+
+    @Override
+    public @NlsContexts.ColumnName String getColumnName(int column) {
+        return "";
+    }
+
+    @Override
+    public Class getColumnClass(int column) {
+        return null;
     }
 
     @Override
     public Object getChild(Object parent, int index) {
-        // 实现获取子节点的逻辑
-        return null; // 仅作示例
+        return ((MyTreeNode) parent).getChildAt(index); // 获取子节点
     }
 
     @Override
     public int getChildCount(Object parent) {
-        // 实现获取子节点数量的逻辑
-        return 2; // 仅作示例
+        return ((MyTreeNode) parent).getChildCount(); // 获取子节点数量
+    }
+
+    @Override
+    public Object getRoot() {
+        return root; // 获取根节点
     }
 
     @Override
     public boolean isLeaf(Object node) {
-        // 实现判断是否为叶节点的逻辑
-        return true; // 仅作示例
+        return ((MyTreeNode) node).isLeaf(); // 判断是否为叶子节点
+    }
+
+    @Override
+    public void valueForPathChanged(TreePath path, Object newValue) {
+
     }
 
     @Override
     public int getIndexOfChild(Object parent, Object child) {
-        // 实现获取子节点索引的逻辑
-        return 0; // 仅作示例
+        return ((MyTreeNode) parent).getIndex((MyTreeNode) child); // 获取子节点索引
     }
 
     @Override
@@ -92,10 +108,5 @@ public class MyTreeTableModel implements TreeTableModel {
     @Override
     public void removeTreeModelListener(TreeModelListener l) {
 
-    }
-
-    @Override
-    public void valueForPathChanged(TreePath path, Object newValue) {
-        // 实现路径值更改的逻辑
     }
 }

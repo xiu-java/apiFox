@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Tree{
+public class Openapi {
     private Info info;
     private String openapi;
     private List<Tag> tags;

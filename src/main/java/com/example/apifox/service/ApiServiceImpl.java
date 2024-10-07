@@ -4,7 +4,8 @@ import com.example.apifox.component.ApiService;
 import com.example.apifox.model.Example;
 import com.example.apifox.model.Item;
 import com.example.apifox.model.ResponseVO;
-import com.example.apifox.model.Tree;
+import com.example.apifox.model.openapi.v3.models.Components;
+import com.example.apifox.model.openapi.v3.models.OpenAPI;
 import com.example.apifox.utils.ExampleDeserializer;
 import com.example.apifox.utils.ItemDeserializer;
 import com.google.gson.Gson;
@@ -20,6 +21,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public final class ApiServiceImpl implements ApiService {
+    Components components = null;
     final OkHttpClient client = new OkHttpClient();
     final private Gson gson = new GsonBuilder()
             .registerTypeAdapter(Example.class, new ExampleDeserializer())
@@ -37,8 +39,8 @@ public final class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public CompletableFuture<Tree> projectDetail(String projectId) {
-        CompletableFuture<Tree> future = new CompletableFuture<>();
+    public CompletableFuture<OpenAPI> projectDetail(String projectId) {
+        CompletableFuture<OpenAPI> future = new CompletableFuture<>();
         String url = "https://api.apifox.com/api/v1/projects/" + projectId + "/export-openapi";
 
         // 使用HttpUrl构建器构造带查询参数的URL
@@ -58,6 +60,7 @@ public final class ApiServiceImpl implements ApiService {
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
                 // 处理请求失败的情况
@@ -71,7 +74,9 @@ public final class ApiServiceImpl implements ApiService {
                     // 获取响应数据
                     assert response.body() != null;
                     String responseBody = response.body().string();
-                    future.complete(gson.fromJson(responseBody, Tree.class));
+                    OpenAPI data = gson.fromJson(responseBody, OpenAPI.class);
+                    components = data.getComponents();
+                    future.complete(data);
                 } else {
                     // 处理请求失败的情况
                     future.completeExceptionally(new RuntimeException("Request failed with code: " + response.code()));

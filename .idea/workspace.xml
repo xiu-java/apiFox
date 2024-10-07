@@ -5,8 +5,97 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cce6504e-3e92-40e0-aaac-c003116104ec" name="Changes" comment="feat:treetable">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/SchemaItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/Components.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/ExternalDocumentation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/OpenAPI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/Operation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/PathItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/Paths.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/callbacks/Callback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/examples/Example.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/headers/Header.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/info/Contact.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/info/Info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/info/License.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/links/Link.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/links/LinkParameter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/ArraySchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/BinarySchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/BooleanSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/ByteArraySchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/ComposedSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/Content.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/DateSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/DateTimeSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/Discriminator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/EmailSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/Encoding.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/EncodingProperty.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/FileSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/IntegerSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/MapSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/MediaType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/NumberSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/ObjectSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/PasswordSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/Schema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/StringSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/UUIDSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/media/XML.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/package.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/parameters/CookieParameter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/parameters/HeaderParameter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/parameters/Parameter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/parameters/PathParameter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/parameters/QueryParameter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/parameters/RequestBody.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/responses/ApiResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/responses/ApiResponses.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/security/OAuthFlow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/security/OAuthFlows.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/security/Scopes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/security/SecurityRequirement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/security/SecurityScheme.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/servers/Server.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/servers/ServerVariable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/servers/ServerVariables.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/openapi/v3/models/tags/Tag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/utils/FileOperation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/utils/RefDeserializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/utils/SchemaData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/schema/Table.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/schema/TreeTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/table/Column.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/table/RotatablePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/table/TreeTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/table/content/Body.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/table/content/Filed.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/table/content/Header.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/table/interfaces/TreeNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/table/interfaces/TreeTableDelegate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/ApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/ApiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataSourceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataSourceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataUpdateTopic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/component/DataUpdateTopic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SettingFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SettingFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/controller/SourceManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/interfaces/DetailDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/interfaces/DetailDelegate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/MethodType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/MethodType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Paths.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/Openapi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeItemVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/model/TreeItemVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/ApiServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/ApiServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/service/DataSourceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/ApiPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/ApiPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/DetailPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/DetailPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/LoadingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/LoadingPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/MyTreeNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/ProjectPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/ProjectPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SchemaSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SchemaSection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SettingUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SettingUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SettingUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SettingUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SourcePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/apifox/view/SourcePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,47 +240,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Run Plugin.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.apifox [buildPlugin].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.apifox [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.apifox [runIde].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.apifox [setupDependencies].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;772&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;azul-21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;/Users/luodexun/Documents/apifox/src/main/java/com/example/apifox&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/luodexun/Documents/code/java/owner/apifox&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.4402299&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Run Plugin.executor": "Debug",
+    "Gradle.apifox [buildPlugin].executor": "Debug",
+    "Gradle.apifox [clean].executor": "Run",
+    "Gradle.apifox [runIde].executor": "Run",
+    "Gradle.apifox [setupDependencies].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "772",
+    "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "azul-21",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "/Users/luodexun/Documents/apifox/src/main/java/com/example/apifox",
+    "last_opened_file_path": "/Users/luodexun/Documents/code/java/owner/apifox/src/main/java/com/example/apifox/model",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.4402299",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;kotlin-gradle-user-dirs&quot;: [
-      &quot;/Users/luodexun/.gradle&quot;
+  "keyToStringList": {
+    "kotlin-gradle-user-dirs": [
+      "/Users/luodexun/.gradle"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/example/apifox/model" />
       <recent name="$PROJECT_DIR$/src/main/java/com/example/apifox/view" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$/src/main/resources/icons" />
       <recent name="$PROJECT_DIR$/src/main/java/com/example/apifox/controller" />
-      <recent name="$PROJECT_DIR$/src/main/resources/com/example/apifox" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/com/example/apifox/view" />
@@ -201,11 +290,11 @@
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.example.apifox.utils" />
-      <recent name="com.example.apifox.view" />
-      <recent name="com.example.apifox.controller" />
+      <recent name="com.example.apifox.view.schema" />
       <recent name="com.example.apifox.model" />
-      <recent name="com.example.apifox" />
+      <recent name="com.example.apifox.view.table.interfaces" />
+      <recent name="com.example.apifox.component" />
+      <recent name="com.example.apifox.view.table.content" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Run Plugin">
@@ -346,7 +435,18 @@
       <workItem from="1721447678956" duration="3263000" />
       <workItem from="1721540174049" duration="14000" />
       <workItem from="1721574208393" duration="3150000" />
-      <workItem from="1721651858690" duration="5559000" />
+      <workItem from="1721651858690" duration="5828000" />
+      <workItem from="1721743371463" duration="4750000" />
+      <workItem from="1721833718230" duration="2582000" />
+      <workItem from="1727707512293" duration="430000" />
+      <workItem from="1727754159558" duration="28062000" />
+      <workItem from="1727834313406" duration="31494000" />
+      <workItem from="1727926634078" duration="30486000" />
+      <workItem from="1728012834822" duration="6384000" />
+      <workItem from="1728026947546" duration="10069000" />
+      <workItem from="1728129164874" duration="10784000" />
+      <workItem from="1728187578953" duration="33075000" />
+      <workItem from="1728272581063" duration="29859000" />
     </task>
     <task id="LOCAL-00001" summary="请求接口">
       <option name="closed" value="true" />
@@ -444,7 +544,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721661215103</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="feat:treetable">
+      <option name="closed" value="true" />
+      <created>1721662333544</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1721662333544</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -472,6 +580,15 @@
     <option name="LAST_COMMIT_MESSAGE" value="feat:treetable" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/apifox/utils/FileOperation.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="com.example.apifox.model.Tree" memberName="paths" />
@@ -479,12 +596,21 @@
         <PinnedItemInfo parentTag="com.example.apifox.model.Schema" memberName="description" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Item" memberName="post" />
         <PinnedItemInfo parentTag="com.example.apifox.model.TreeItemVO" memberName="children" />
-        <PinnedItemInfo parentTag="javax.swing.tree.TreePath" memberName="lastPathComponent" />
-        <PinnedItemInfo parentTag="javax.swing.tree.DefaultMutableTreeNode" memberName="children" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Detail" memberName="parameters" />
+        <PinnedItemInfo parentTag="com.example.apifox.view.MyTreeNode" memberName="childrens" />
         <PinnedItemInfo parentTag="com.example.apifox.model.Tree" memberName="tags" />
+        <PinnedItemInfo parentTag="com.example.apifox.model.TreeItemVO" memberName="node" />
+        <PinnedItemInfo parentTag="javax.swing.tree.TreePath" memberName="parentPath" />
+        <PinnedItemInfo parentTag="javax.swing.tree.DefaultMutableTreeNode" memberName="children" />
+        <PinnedItemInfo parentTag="com.example.apifox.model.openapi.v3.models.Operation" memberName="parameters" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="GradleRunConfiguration">
+        <watch expression="node.response.get(0).children" />
+        <watch expression="data.tags" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

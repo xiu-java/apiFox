@@ -54,9 +54,11 @@ public class SettingFactory implements SearchableConfigurable {
     public void apply() throws ConfigurationException {
         // 从设计的UI中拿到文件的路径
         String token = settingUI.getTextField().getText();
+        String template = settingUI.getTemplateTextArea().getText();
         // 设置文本信息
         try {
             PropertiesComponent.getInstance().setValue("ApiFox.Token", token);
+            PropertiesComponent.getInstance().setValue("ApiFox.Template", template);
             // 设置内容，这里全局的一个Config，在ReadUI里面可以使用
         } catch (Exception ignore) {
         }

@@ -4,6 +4,9 @@ import com.example.apifox.component.DataSourceService;
 import com.example.apifox.interfaces.ComponentDelegate;
 import com.example.apifox.interfaces.DetailDelegate;
 import com.example.apifox.model.Detail;
+import com.example.apifox.model.TreeItemVO;
+import com.example.apifox.model.openapi.v3.models.Components;
+import com.example.apifox.model.openapi.v3.models.Operation;
 import com.example.apifox.view.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
@@ -47,7 +50,7 @@ public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long>,
         // 创建内容
         Content home = contentFactory.createContent(new JBScrollPane(projectPanel), "Home", false);
         Content apis = contentFactory.createContent(apiPanel, "Apis", false);
-        Content detail = contentFactory.createContent(new JBScrollPane(detailPanel), "Detail", false);
+        Content detail = contentFactory.createContent(detailPanel, "Detail", false);
         toolWindow.getContentManager().addContent(home);
         toolWindow.getContentManager().addContent(apis);
         toolWindow.getContentManager().addContent(detail);
@@ -66,9 +69,9 @@ public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long>,
     }
 
     @Override
-    public void onDetailClick(Detail detail) {
+    public void onDetailClick(TreeItemVO detail, Components components) {
         Content currentContent = window.getContentManager().findContent("Detail");
         window.getContentManager().setSelectedContent(currentContent);
-        detailPanel.open(detail);
+        detailPanel.open(detail,components);
     }
 }

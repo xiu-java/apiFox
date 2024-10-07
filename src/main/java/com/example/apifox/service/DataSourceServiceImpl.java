@@ -4,22 +4,19 @@ import com.example.apifox.component.ApiService;
 import com.example.apifox.component.DataSourceService;
 import com.example.apifox.component.DataUpdateTopic;
 import com.example.apifox.model.*;
+import com.example.apifox.model.openapi.v3.models.Components;
+import com.example.apifox.model.openapi.v3.models.OpenAPI;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
-import com.intellij.util.messages.MessageBus;
 
-import static org.apache.commons.beanutils.BeanUtils.copyProperties;
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
 public final class DataSourceServiceImpl implements DataSourceService {
-    private Tree list;
-
+    private Openapi list;
     private Map<Long, List<ProjectVO>> project;
 
     public static DataSourceService getInstance(Project project) {
@@ -40,16 +37,9 @@ public final class DataSourceServiceImpl implements DataSourceService {
     @Override
     public void upDateProjectById(Long projectId) {
         ApiService apiService = ApiServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
-        CompletableFuture<Tree> future = apiService.projectDetail(String.valueOf(projectId));
+        CompletableFuture<OpenAPI> future = apiService.projectDetail(String.valueOf(projectId));
         future.thenAccept(tree -> {
             // 在异步操作完成后处理结果
-            if (tree != null) {
-                DataUpdateTopic publisher = ProjectManager.getInstance().getDefaultProject().getMessageBus().syncPublisher(DataUpdateTopic.DATA_UPDATE_TOPIC);
-                this.list = tree;
-                publisher.dataUpdated(tree);
-            } else {
-                System.out.println("API request failed.");
-            }
         });
         // 等待异步操作完成
         future.join();
@@ -61,7 +51,7 @@ public final class DataSourceServiceImpl implements DataSourceService {
     }
 
     @Override
-    public  Tree getDataSource() {
+    public Openapi getDataSource() {
         return this.list;
     }
 }

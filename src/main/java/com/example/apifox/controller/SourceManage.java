@@ -69,9 +69,9 @@ public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long>,
     }
 
     @Override
-    public void onDetailClick(TreeItemVO detail, Components components) {
+    public void onDetailClick(TreeItemVO detail) {
         Content currentContent = window.getContentManager().findContent("Detail");
         window.getContentManager().setSelectedContent(currentContent);
-        detailPanel.open(detail,components);
+        detailPanel.open(detail);
     }
 }

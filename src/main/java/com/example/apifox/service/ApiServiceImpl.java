@@ -1,6 +1,7 @@
 package com.example.apifox.service;
 
 import com.example.apifox.component.ApiService;
+import com.example.apifox.component.DataSourceService;
 import com.example.apifox.model.Example;
 import com.example.apifox.model.Item;
 import com.example.apifox.model.ResponseVO;
@@ -13,6 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -21,13 +23,14 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public final class ApiServiceImpl implements ApiService {
-    Components components = null;
     final OkHttpClient client = new OkHttpClient();
     final private Gson gson = new GsonBuilder()
             .registerTypeAdapter(Example.class, new ExampleDeserializer())
             .registerTypeAdapter(Item.class, new ItemDeserializer())
             .create();
     private final String token;
+
+
     MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     public ApiServiceImpl() {
@@ -74,9 +77,7 @@ public final class ApiServiceImpl implements ApiService {
                     // 获取响应数据
                     assert response.body() != null;
                     String responseBody = response.body().string();
-                    OpenAPI data = gson.fromJson(responseBody, OpenAPI.class);
-                    components = data.getComponents();
-                    future.complete(data);
+                    future.complete(gson.fromJson(responseBody, OpenAPI.class));
                 } else {
                     // 处理请求失败的情况
                     future.completeExceptionally(new RuntimeException("Request failed with code: " + response.code()));

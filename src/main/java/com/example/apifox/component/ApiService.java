@@ -9,9 +9,9 @@ import java.util.concurrent.CompletableFuture;
 
 public interface ApiService {
 
-    Components components = null;
-
     CompletableFuture<OpenAPI> projectDetail(String projectId);
 
     ResponseVO getProject();
+
+
 }

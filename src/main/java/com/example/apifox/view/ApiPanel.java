@@ -1,11 +1,13 @@
 package com.example.apifox.view;
 
 import com.example.apifox.component.ApiService;
+import com.example.apifox.component.DataSourceService;
 import com.example.apifox.interfaces.DetailDelegate;
 import com.example.apifox.model.TreeItemVO;
 import com.example.apifox.model.openapi.v3.models.Components;
 import com.example.apifox.model.openapi.v3.models.OpenAPI;
 import com.example.apifox.service.ApiServiceImpl;
+import com.example.apifox.service.DataSourceServiceImpl;
 import com.example.apifox.utils.FileOperation;
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.DataContext;
@@ -23,8 +25,8 @@ import java.awt.event.MouseEvent;
 import java.util.concurrent.CompletableFuture;
 
 public class ApiPanel extends JPanel {
-    public Components components;
     CardLayout cardLayout = new CardLayout();
+    DataSourceService dataSourceService = DataSourceServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
     private final SourcePanel sourcePane =new SourcePanel();
     private final LoadingPanel loadingPanel =new LoadingPanel("加载中...",15,0);
     public ApiPanel(DetailDelegate detailDelegate) {
@@ -40,7 +42,7 @@ public class ApiPanel extends JPanel {
                         // 获取节点的数据
                         Object nodeData = selectedNode.getUserObject();
                         if(nodeData instanceof TreeItemVO treeItemVO) {
-                            detailDelegate.onDetailClick(treeItemVO,components);
+                            detailDelegate.onDetailClick(treeItemVO);
 
                         }
                     }
@@ -71,7 +73,7 @@ public class ApiPanel extends JPanel {
         future.thenAccept(tree -> {
             // 在异步操作完成后处理结果
             if (tree != null) {
-                components = tree.getComponents();
+                dataSourceService.setComponents(tree.getComponents());
                 this.sourcePane.updateUi(tree);
             } else {
                 System.out.println("API request failed.");

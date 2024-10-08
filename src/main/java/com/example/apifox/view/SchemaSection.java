@@ -1,82 +1,93 @@
 package com.example.apifox.view;
 
-import com.intellij.openapi.util.NlsContexts;
+import com.example.apifox.model.SchemaItem;
+import com.example.apifox.view.schema.Table;
+import com.example.apifox.view.schema.TreeTable;
+import com.example.apifox.view.table.Column;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPanel;
-import com.intellij.ui.dualView.TreeTableView;
-import com.intellij.ui.treeStructure.treetable.ListTreeTableModelOnColumns;
-import com.intellij.ui.treeStructure.treetable.TreeColumnInfo;
-import com.intellij.ui.treeStructure.treetable.TreeTable;
-import com.intellij.ui.treeStructure.treetable.TreeTableModel;
-import com.intellij.util.ui.ColumnInfo;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import com.intellij.openapi.util.IconLoader;
+import com.intellij.ui.components.JBScrollPane;
+
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.border.Border;
 import java.awt.*;
-import java.sql.Array;
+import java.awt.geom.RoundRectangle2D;
 
 
 public class SchemaSection extends JBPanel {
-    public static final Icon MyIcon = IconLoader.getIcon("/icons/apifox.svg", SchemaSection.class);
-    public static final ColumnInfo<MyTreeNode,String>[] COLUMN_INFOS = new ColumnInfo[]{
-            new ColumnInfo<MyTreeNode,String>("File/Function"){
-                @Override
-                public @NotNull String valueOf(MyTreeNode myTreeNode) {
-                    return "1123";
-                }
+    TreeTable  treeTable;
+    Table table;
+    String type = "tree";
+    SchemaSection(String label ,String type){
+        this.type = type;
+        setLayout(new BorderLayout());
+        setBorder(new RoundedRectangleBorder(10, 10));
+        Box box = Box.createHorizontalBox();
+        JBLabel title = new JBLabel(label);
+        box.add(title);
+        box.setBackground(JBColor.BLUE);
+        add(box, BorderLayout.NORTH);
+        JBScrollPane scrollPane = new JBScrollPane();
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        if(type.equals("tree")){
+            treeTable = new TreeTable();
+            scrollPane.setViewportView(treeTable);
+        }else {
+            table = new Table();
+            scrollPane.setViewportView(table);
+        }
+        add(scrollPane, BorderLayout.CENTER);
+    }
 
-                @Override
-                public final Class<TreeTableModel> getColumnClass() {
-                    return TreeTableModel.class;
-                }
-
-            },
-            new ColumnInfo<MyTreeNode,String>("Branch Coverage") {
-                @Override
-                public @NotNull String valueOf(MyTreeNode o) {
-                    return o.getName();
-                }
-            },
-            new ColumnInfo<MyTreeNode,String>("Line/Region Coverage") {
-                @Override
-                public @NotNull String valueOf(MyTreeNode o) {
-                    return o.getValue();
-                }
-
-            },
-
-    };
-    SchemaSection(){
-        // 创建模型
-        MyTreeTableModel treeTableModel = new MyTreeTableModel();
-
-// 创建模型数据
-        MyTreeNode root = new MyTreeNode("r","kk");
-        MyTreeNode child1 = new MyTreeNode("c","l");
-        MyTreeNode child2 = new MyTreeNode("c","q");
-        root.add(child1);
-        root.add(child2);
-        JBLabel label = new JBLabel(MyIcon);
-        label.setPreferredSize(new Dimension(100,100));
-//        label.setBackground(JBColor.BLUE);
-        // 创建 TreeTableView 并设置模型
-        TreeTableView treeTableView = new TreeTableView(new ListTreeTableModelOnColumns(root,COLUMN_INFOS));
-//        treeTableView.setRowSelectionAllowed(true);
-        // 你可以自定义列
-        treeTableView.setRootVisible(true); // 设置根节点是否可见
-        treeTableView.setPreferredSize(new Dimension(400, 100));
-        treeTableView.setRowSelectionAllowed(false);
-        treeTableView.setCellSelectionEnabled(false);
-        add(treeTableView);
-        add(label);
+    public void load(SchemaItem dataSource) {
+        if(type.equals("tree")){
+            treeTable.update(dataSource);
+        }else {
+            table.update(dataSource);
+        }
     }
 
     public JComponent getComponent() {
         return this;
+    }
+
+    // 自定义圆角边框
+    public static class RoundedRectangleBorder implements Border {
+        private final int arcWidth;
+        private final int arcHeight;
+        private final Color borderColor;
+
+        public RoundedRectangleBorder(int arcWidth, int arcHeight) {
+            this(arcWidth, arcHeight, Color.BLACK);
+        }
+
+        public RoundedRectangleBorder(int arcWidth, int arcHeight, Color borderColor) {
+            this.arcWidth = arcWidth;
+            this.arcHeight = arcHeight;
+            this.borderColor = borderColor;
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(arcHeight, arcWidth, arcHeight, arcWidth);
+        }
+
+        @Override
+        public boolean isBorderOpaque() {
+            return true;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setColor(borderColor);
+
+            RoundRectangle2D rect = new RoundRectangle2D.Float(x, y, width - 1, height - 1, arcWidth, arcHeight);
+            g2d.draw(rect);
+
+            g2d.dispose();
+        }
     }
 }

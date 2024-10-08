@@ -10,9 +10,9 @@ import java.util.Map;
 
 public interface DataSourceService {
 
-    void upDateProjectById(Long projectId);
+    Components getComponents();
 
-    public Map<Long,List<ProjectVO>> getProject();
+    void setComponents(Components components);
 
-    public Openapi getDataSource();
+    Map<Long,List<ProjectVO>> getProject();
 }

@@ -1,15 +1,11 @@
 package com.example.apifox.view;
 
 import com.example.apifox.model.MethodType;
-import com.example.apifox.model.SchemaItem;
 import com.example.apifox.model.TreeItemVO;
 import com.example.apifox.model.openapi.v3.models.Components;
 import com.example.apifox.model.openapi.v3.models.OpenAPI;
 import com.example.apifox.model.openapi.v3.models.Operation;
 import com.example.apifox.model.openapi.v3.models.PathItem;
-import com.example.apifox.model.openapi.v3.models.media.Schema;
-import com.example.apifox.model.openapi.v3.models.parameters.RequestBody;
-import com.example.apifox.model.openapi.v3.models.responses.ApiResponses;
 import com.example.apifox.model.openapi.v3.models.tags.Tag;
 import com.example.apifox.utils.FileOperation;
 import com.example.apifox.utils.SchemaData;
@@ -26,19 +22,13 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellEditor;
 import java.awt.*;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static com.intellij.openapi.util.NullUtils.notNull;
 
 public class SourcePanel extends JTree {
     public DefaultTreeModel model = new DefaultTreeModel(null);
 
-    private  Components components;
 
     public SourcePanel() {
         setFocusable(false);
@@ -190,7 +180,6 @@ public class SourcePanel extends JTree {
     }
 
     public void updateUi(OpenAPI data) {
-        this.components = data.getComponents();
         TreeItemVO rootNode = new TreeItemVO();
         rootNode.setRoot(true);
         rootNode.setDirectory(true);
@@ -273,6 +262,7 @@ public class SourcePanel extends JTree {
             node.setUrl(path);
             node.setDirectory(false);
             node.setNode(operation);
+            item.get().setUrl(toLowerCaseCamelCase(path));
             item.get().getChildren().add(node);
             DefaultMutableTreeNode fileItem = new DefaultMutableTreeNode(node);
             node.setTreeNode(fileItem);
@@ -285,10 +275,12 @@ public class SourcePanel extends JTree {
                     Optional<TreeItemVO> tagItem = treeNode.getChildren().stream().filter(v->v.getTitle().equals(element)).findFirst();
                     if(tagItem.isPresent()){
                         treeNode = tagItem.get();
+
                     }else {
                         break;
                     }
                 }
+                treeNode.setUrl(toLowerCaseCamelCase(path));
                 TreeItemVO node = new TreeItemVO();
                 node.setMethod(method);
                 node.setTitle(operation.getSummary());
@@ -306,6 +298,7 @@ public class SourcePanel extends JTree {
                 node.setUrl(path);
                 node.setDirectory(false);
                 node.setNode(operation);
+                rootNode.setUrl(toLowerCaseCamelCase(path));
                 DefaultMutableTreeNode fileItem = new DefaultMutableTreeNode(node);
                 node.setTreeNode(fileItem);
                 rootItem.add(fileItem);
@@ -313,5 +306,26 @@ public class SourcePanel extends JTree {
         }
     }
 
+    private static String toLowerCaseCamelCase(String path) {
+        String[] paths = path.split("/");
+        String[] newArr = Arrays.copyOf(paths, paths.length - 1);
+        if (newArr.length == 0) {
+            return "";
+        }
 
+        StringBuilder sb = new StringBuilder();
+        boolean isFirstElement = true;
+        for (String s : newArr) {
+        if(s.isEmpty()){
+             continue;
+        }
+         if (!isFirstElement) {
+                // 首字母大写
+                s = s.substring(0, 1).toUpperCase() + s.substring(1);
+          }
+            sb.append(s);
+            isFirstElement = false;
+        }
+        return sb.toString();
+    }
 }

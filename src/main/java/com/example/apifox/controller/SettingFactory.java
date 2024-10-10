@@ -57,12 +57,14 @@ public class SettingFactory implements SearchableConfigurable {
         String template = settingUI.getTemplateTextArea().getText();
         String  apiDir = settingUI.getApiText().getText();
         String interfaceDir = settingUI.getInterfaceText().getText();
+        String excloud = settingUI.getExcloudText().getText();
         // 设置文本信息
         try {
             PropertiesComponent.getInstance().setValue("ApiFox.Token", token);
             PropertiesComponent.getInstance().setValue("ApiFox.Template", template);
             PropertiesComponent.getInstance().setValue("ApiFox.ApiDir", apiDir);
             PropertiesComponent.getInstance().setValue("ApiFox.InterfaceDir", interfaceDir);
+            PropertiesComponent.getInstance().setValue("ApiFox.Excloud", excloud);
             // 设置内容，这里全局的一个Config，在ReadUI里面可以使用
         } catch (Exception ignore) {
         }

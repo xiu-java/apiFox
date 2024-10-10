@@ -23,6 +23,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellEditor;
 import java.awt.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.intellij.openapi.util.NullUtils.notNull;
 
@@ -307,25 +308,26 @@ public class SourcePanel extends JTree {
     }
 
     private static String toLowerCaseCamelCase(String path) {
-        String[] paths = path.split("/");
-        String[] newArr = Arrays.copyOf(paths, paths.length - 1);
-        if (newArr.length == 0) {
-            return "";
-        }
+//        String[] paths = path.split("/");
+//        String[] newArr = Arrays.copyOf(paths, paths.length - 1);
+//        if (newArr.length == 0) {
+//            return "";
+//        }
+        return  path.substring(0, path.lastIndexOf("/"));
 
-        StringBuilder sb = new StringBuilder();
-        boolean isFirstElement = true;
-        for (String s : newArr) {
-        if(s.isEmpty()){
-             continue;
-        }
-         if (!isFirstElement) {
-                // 首字母大写
-                s = s.substring(0, 1).toUpperCase() + s.substring(1);
-          }
-            sb.append(s);
-            isFirstElement = false;
-        }
-        return sb.toString();
+//        StringBuilder sb = new StringBuilder();
+//        boolean isFirstElement = true;
+//        for (String s : newArr) {
+//        if(s.isEmpty()){
+//             continue;
+//        }
+//         if (!isFirstElement) {
+//                // 首字母大写
+//                s = s.substring(0, 1).toUpperCase() + s.substring(1);
+//          }
+//            sb.append(s);
+//            isFirstElement = false;
+//        }
+//        return sb.toString();
     }
 }

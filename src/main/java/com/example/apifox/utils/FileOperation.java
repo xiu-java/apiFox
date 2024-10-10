@@ -5,22 +5,19 @@ import com.example.apifox.model.TreeItemVO;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.intellij.openapi.util.NullUtils.notNull;
 
@@ -29,6 +26,13 @@ public class FileOperation {
     String template = PropertiesComponent.getInstance().getValue("ApiFox.Template");
     String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
     String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");
+    String exCloudInterface = PropertiesComponent.getInstance().getValue("ApiFox.Excloud");
+    List<String> exCloudInterfaceList = new ArrayList<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
+
+    public FileOperation(){
+      String[]  config = exCloudInterface.split("/");
+     exCloudInterfaceList.addAll(Arrays.asList(config));
+    }
 
     public  void  write(Project project,String targetDirectory, String fileName, String fileContent){
         WriteCommandAction.runWriteCommandAction(project, () -> {
@@ -82,15 +86,11 @@ public class FileOperation {
         });
     }
     public void createApi(Project project,TreeItemVO item){
-
-        String template = """
-                    export const %s = (params:V) => http.get("%s",params);
-                    """;
-        String content = String.format(template,item.getUrl(),item.getUrl());
-
-        clear(project,apiDir+"/"+item.getUrl()+ ".ts");
+        clear(project,apiDir+item.getUrl()+ ".ts");
+        clear(project,interfaceDir+item.getUrl()+ ".d.ts");
+        String[] interfaceList = new String[0];
         item.getChildren().forEach(child -> {
-          String interfaced = InterfaceFormat(child);
+          String interfaced = InterfaceFormat(child,interfaceList);
 //        String api =     ApiFormat(child,item.getUrl());
 //         write(project,apiDir,item.getUrl(),api);
         });
@@ -130,20 +130,55 @@ public class FileOperation {
         }
     }
 
-    public String InterfaceFormat(TreeItemVO item){
-        extractGenerics(item.response.interfaces);
+    public String InterfaceFormat(TreeItemVO item,String[] list){
+       if (notNull(item.body)){
+       List<String> generics = extractGenerics(item.body.interfaces);
+       Boolean isExist = this.checkIfAllElementsExist(generics, exCloudInterfaceList);
+       System.out.println(isExist);
+       }
+       if (notNull(item.response)) {
+           List<String> generics = extractGenerics(item.response.interfaces);
+           Boolean isExist = this.checkIfAllElementsExist(generics, exCloudInterfaceList);
+           System.out.println(isExist);
+       }
+
         return item.getTitle();
     }
 
 
-    private static void extractGenerics(String input) {
+    private static List<String> extractGenerics(String input) {
         // 匹配尖括号内的内容
-       String[] generics =  Arrays.stream(input.split("<")).map(s -> s.replaceAll(">","")).toArray(String[]::new);
-
+       return Arrays.stream(input.split("<")).map(s -> s.replaceAll(">","")).toList();
         // 如果没有匹配到泛型，直接添加当前字符串
-        System.out.println(generics);
+    }
 
+    public static String reconstructGenericType(String[] generics) {
+        StringBuilder result = new StringBuilder();
+        int depth = 0;
 
+        for (int i = 0; i < generics.length; i++) {
+            String generic = generics[i];
+            result.append(generic);
+            if (i != generics.length - 1) {
+                result.append("<");
+                depth++;
+            }
+        }
+
+        result.append(">".repeat(Math.max(0, depth)));
+
+        return result.toString();
+    }
+
+    private  boolean checkIfAllElementsExist(List<String> list1, List<String> list2) {
+        HashSet<String> set2 = new HashSet<>(list2);
+
+        for (String element : list1) {
+            if (set2.contains(element)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

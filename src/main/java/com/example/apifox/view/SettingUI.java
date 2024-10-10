@@ -20,6 +20,7 @@ public class SettingUI {
     private JTextArea templateTextArea;
     private JTextField interfaceText;
     private JTextField apiText;
+    private JTextField excloudText;
 
     public SettingUI() {
 
@@ -30,10 +31,12 @@ public class SettingUI {
         String template = PropertiesComponent.getInstance().getValue("ApiFox.Template");
         String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
         String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");
+        String excloud = PropertiesComponent.getInstance().getValue("ApiFox.Excloud");
         textField.setText(token);
         templateTextArea.setText(template);
         apiText.setText(apiDir);
         interfaceText.setText(interfaceDir);
+        excloudText.setText(excloud);
         return mainPanel;
     }
 
@@ -49,6 +52,9 @@ public class SettingUI {
 
     public JTextField getInterfaceText() {
         return interfaceText;
+    }
+    public JTextField getExcloudText() {
+        return excloudText;
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here

@@ -18,6 +18,8 @@ public class SettingUI {
     private JLabel textLabel;
     private JTextField textField;
     private JTextArea templateTextArea;
+    private JTextField interfaceText;
+    private JTextField apiText;
 
     public SettingUI() {
 
@@ -26,8 +28,12 @@ public class SettingUI {
     public JComponent getComponent() {
         String token = PropertiesComponent.getInstance().getValue("ApiFox.Token");
         String template = PropertiesComponent.getInstance().getValue("ApiFox.Template");
+        String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
+        String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");
         textField.setText(token);
         templateTextArea.setText(template);
+        apiText.setText(apiDir);
+        interfaceText.setText(interfaceDir);
         return mainPanel;
     }
 
@@ -36,5 +42,15 @@ public class SettingUI {
     }
     public JTextArea getTemplateTextArea() {
         return templateTextArea;
+    }
+    public JTextField getApiText() {
+        return apiText;
+    }
+
+    public JTextField getInterfaceText() {
+        return interfaceText;
+    }
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

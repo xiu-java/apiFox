@@ -221,27 +221,31 @@ public class FileOperation {
             if(item.hasChildren()){
              interfaces.append("  ".repeat(level)).append(String.format("interface %s {\n", item.interfaces));
              List<SchemaItem>  cache = new ArrayList<>();
-             item.getChildren().forEach(child->{
-                 String v = child.interfaces;
-                 if(Objects.equals(v, "Integer")){
-                     v = "number";
-                 }else if(Objects.equals(v, "Boolean")){
-                     v = "boolean";
-                 }else if(Objects.equals(v, "String")){
-                     v = "string";
-                 }
-                 interfaces.append("  ".repeat(level+1)).append("/**\n");
-                 interfaces.append("  ".repeat(level+1)).append(String.format("* %s\n",child.description));
-                 interfaces.append("  ".repeat(level+1)).append("*/\n");
-                 if(child.required){
-                     interfaces.append("  ".repeat(level+1)).append(String.format(" %s: %s;\n\n",child.key,v));
-                 }else {
-                     interfaces.append("  ".repeat(level+1)).append(String.format(" %s?: %s;\n\n",child.key,v));
-                 }
-                 if(child.hasChildren()){
-                     cache.add(child);
-                 }
-             });
+                for (int i = 0; i <item.getChildren().size() ; i++) {
+                    SchemaItem child = item.getChildren().get(i);
+                    String v = child.interfaces;
+                    if(Objects.equals(v, "Integer")){
+                        v = "number";
+                    }else if(Objects.equals(v, "Boolean")){
+                        v = "boolean";
+                    }else if(Objects.equals(v, "String")){
+                        v = "string";
+                    }
+                    interfaces.append("  ".repeat(level+1)).append("/**\n");
+                    interfaces.append("  ".repeat(level+1)).append(String.format("* %s\n",child.description));
+                    interfaces.append("  ".repeat(level+1)).append("*/\n");
+                    if(child.required){
+                        interfaces.append("  ".repeat(level+1)).append(String.format(" %s: %s;\n",child.key,v));
+                    }else {
+                        interfaces.append("  ".repeat(level+1)).append(String.format(" %s?: %s;\n",child.key,v));
+                    }
+                    if(child.hasChildren()){
+                        cache.add(child);
+                    }
+                    if(i!=item.getChildren().size()-1){
+                        interfaces.append('\n');
+                    }
+                }
             interfaces.append("  ".repeat(level)).append("};\n");
             cache.forEach(c->addInterfaceRow(c,interfaces,level,namespace));
             }

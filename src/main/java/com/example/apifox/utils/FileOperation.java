@@ -1,6 +1,7 @@
 package com.example.apifox.utils;
 
 import com.example.apifox.model.MethodType;
+import com.example.apifox.model.SchemaItem;
 import com.example.apifox.model.TreeItemVO;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.command.WriteCommandAction;
@@ -14,10 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.intellij.openapi.util.NullUtils.notNull;
 
@@ -27,11 +26,13 @@ public class FileOperation {
     String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
     String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");
     String exCloudInterface = PropertiesComponent.getInstance().getValue("ApiFox.Excloud");
-    List<String> exCloudInterfaceList = new ArrayList<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
+    HashSet<String> whiteList = new HashSet<>();
 
     public FileOperation(){
-      String[]  config = exCloudInterface.split("/");
-     exCloudInterfaceList.addAll(Arrays.asList(config));
+        List<String> exCloudInterfaceList = new ArrayList<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
+        String[]  config = exCloudInterface.split("/");
+        exCloudInterfaceList.addAll(Arrays.asList(config));
+        whiteList = new HashSet<>(exCloudInterfaceList);
     }
 
     public  void  write(Project project,String targetDirectory, String fileName, String fileContent){
@@ -52,7 +53,7 @@ public class FileOperation {
                 Path filePath = Paths.get(projectRootPath,targetDirectory, fileName + ".ts");
 
                 // 写入文件内容
-                Files.writeString(filePath, fileContent+ System.lineSeparator(),StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                Files.writeString(filePath, fileContent+ System.lineSeparator(),StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
                 // 刷新虚拟文件系统以使 IDEA 识别新文件
                 VirtualFile virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByPath(filePath.toString());
@@ -88,97 +89,148 @@ public class FileOperation {
     public void createApi(Project project,TreeItemVO item){
         clear(project,apiDir+item.getUrl()+ ".ts");
         clear(project,interfaceDir+item.getUrl()+ ".d.ts");
-        String[] interfaceList = new String[0];
+        StringBuilder namespace= new StringBuilder("API");
+        StringBuilder interfaceTemplate = new StringBuilder("declare namespace API {\n");
+        StringBuilder apiTemplate = new StringBuilder();
+        for (String p : item.getUrl().split("/")) {
+            if(!Objects.equals(p, "")){
+                interfaceTemplate.append(String.format("namespace %s {\n", p));
+                namespace.append('.').append(p);
+            }
+        }
         item.getChildren().forEach(child -> {
-          String interfaced = InterfaceFormat(child,interfaceList);
-//        String api =     ApiFormat(child,item.getUrl());
-//         write(project,apiDir,item.getUrl(),api);
+        InterfaceFormat(child,interfaceTemplate,namespace.toString());
+        ApiFormat(child,apiTemplate,namespace.toString());
         });
+        for (String p : item.getUrl().split("/")) {
+            if(!Objects.equals(p, "")){
+                interfaceTemplate.append("}\n");
+            }
+        }
+        interfaceTemplate.append("}");
 
     }
 
-    public String ApiFormat(TreeItemVO item,String fileName){
+    public void ApiFormat(TreeItemVO item, StringBuilder apiTemplate, String namespace){
         String [] tags = item.getUrl().split("/");
         String name = tags[tags.length-1];
         if(item.getMethod() == MethodType.GET){
             if(notNull(item.query)){
+                String queryNs = buildNs(item.query,namespace);
+                String responseNs = buildNs(item.response,namespace);
                 String template = """
                    /*
                     * %s
                     * GET %s
                    */
-                   export const %s: (params: API.%s.%s.%s) => Promise<API.%s.%s.%s> = (params: API.%s.%s.%) => http.get('%s', { params });""";
-                return String.format(template,item.getTitle(),item.getUrl(),name,fileName,name,item.query.interfaces,fileName,name,item.response.interfaces,fileName,name,item.query.interfaces,item.getUrl());
+                   export const %s: (params: %s) => Promise<%s> = (params: %s) => http.get('%s', { params });""";
+                apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,queryNs,responseNs,queryNs,item.getUrl()));
             }else {
+                String responseNs = buildNs(item.response,namespace);
                 String template = """
                    /*
                     * %s
                     * GET %s
                    */
-                   export const %s: () => Promise<API.%s.%s.%s> = () => http.get('%s');""";
-                return String.format(template,item.getTitle(),item.getUrl(),name,fileName,item.response.interfaces,fileName,item.getUrl());
+                   export const %s: () => Promise<%s> = () => http.get('%s');""";
+               apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,responseNs,item.getUrl()));
             }
 
         }else{
+            String bodyNs = buildNs(item.query,namespace);
+            String responseNs = buildNs(item.response,namespace);
             String template = """
                    /*
                     * %s
                     * POST %s
                    */
-                   export const %s: (params: API.%s.%s.%s) => Promise<API.%s.%s.%s> = (params: API.%s.%s.%s) => http.post('%s', params);""";
-            return String.format(template,item.getTitle(),item.getUrl(),name,fileName,name,item.body.interfaces,fileName,name,item.response.interfaces,fileName,name,item.body.interfaces,item.getUrl());
+                   export const %s: (params: %s) => Promise<%s> = (params: %s) => http.post('%s', { params });""";
+            apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,bodyNs,responseNs,bodyNs,item.getUrl()));
         }
+
     }
 
-    public String InterfaceFormat(TreeItemVO item,String[] list){
-       if (notNull(item.body)){
-       List<String> generics = extractGenerics(item.body.interfaces);
-       Boolean isExist = this.checkIfAllElementsExist(generics, exCloudInterfaceList);
-       System.out.println(isExist);
-       }
-       if (notNull(item.response)) {
-           List<String> generics = extractGenerics(item.response.interfaces);
-           Boolean isExist = this.checkIfAllElementsExist(generics, exCloudInterfaceList);
-           System.out.println(isExist);
-       }
 
-        return item.getTitle();
+    public String buildNs(SchemaItem schemaItem,String namespace){
+        List<String> generics = extractGenerics(schemaItem.interfaces);
+        StringBuilder ns = new StringBuilder();
+        for (int i = 0; i < generics.size(); i++) {
+            String g = generics.get(i);
+            if(whiteList.contains(g)){
+                if(generics.size()-1==i){
+                    ns.append(g).append(">".repeat(generics.size()-1));
+                }else {
+                    ns.append(g).append("<");
+                }
+            }else {
+                if(generics.size()-1==i){
+                    ns.append(namespace).append('.').append(g).append(">".repeat(generics.size()-1));
+                }else {
+                    ns.append(namespace).append('.').append(g).append("<");
+                }
+            }
+        }
+        return ns.toString();
     }
+
+
+    public void InterfaceFormat(TreeItemVO item,StringBuilder interfaceTemplate,String namespace){
+        String [] tags = item.getUrl().split("/");
+        String name = tags[tags.length-1];
+        interfaceTemplate.append(String.format("namespace %s {",name));
+        if(notNull(item.query)){
+            addInterfaceRow(item.query,interfaceTemplate, String.format("%s.%s",namespace,name));
+        }
+
+        if(notNull(item.body)){
+            addInterfaceRow(item.body,interfaceTemplate, String.format("%s.%s",namespace,name));
+        }
+
+        if(notNull(item.response)){
+            addInterfaceRow(item.response,interfaceTemplate, String.format("%s.%s",namespace,name));
+        }
+        interfaceTemplate.append("};\n");
+    }
+
+    public void addInterfaceRow(SchemaItem item,StringBuilder interfaces,String namespace){
+        List<String> generics = extractGenerics(item.interfaces);
+        if(whiteList.contains(generics.getFirst())){
+            if(item.hasChildren()){
+                item.getChildren().forEach(child->{
+                    this.addInterfaceRow(child,interfaces,namespace);
+                });
+            }
+        }else {
+            if(item.hasChildren()){
+             AtomicReference<String> template = new AtomicReference<>(String.format("interface %s {\n", item.interfaces));
+             List<SchemaItem>  cache = new ArrayList<>();
+             item.getChildren().forEach(child->{
+                 String v = child.interfaces;
+                 if(Objects.equals(v, "Integer")){
+                     v = "number";
+                 }else if(Objects.equals(v, "Boolean")){
+                     v = "boolean";
+                 }else if(Objects.equals(v, "String")){
+                     v = "string";
+                 }
+                 String temp = String.format("/**\n * %s\n */%s: %s;\n",child.description,child.key,v);
+                 template.set(template + temp);
+                 if(child.hasChildren()){
+                     cache.add(child);
+                 }
+             });
+             template.set(template+"}\n");
+             interfaces.append(template);
+                cache.forEach(c->addInterfaceRow(c,interfaces,namespace));
+            }
+        }
+    };
 
 
     private static List<String> extractGenerics(String input) {
         // 匹配尖括号内的内容
        return Arrays.stream(input.split("<")).map(s -> s.replaceAll(">","")).toList();
         // 如果没有匹配到泛型，直接添加当前字符串
-    }
-
-    public static String reconstructGenericType(String[] generics) {
-        StringBuilder result = new StringBuilder();
-        int depth = 0;
-
-        for (int i = 0; i < generics.length; i++) {
-            String generic = generics[i];
-            result.append(generic);
-            if (i != generics.length - 1) {
-                result.append("<");
-                depth++;
-            }
-        }
-
-        result.append(">".repeat(Math.max(0, depth)));
-
-        return result.toString();
-    }
-
-    private  boolean checkIfAllElementsExist(List<String> list1, List<String> list2) {
-        HashSet<String> set2 = new HashSet<>(list2);
-
-        for (String element : list1) {
-            if (set2.contains(element)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

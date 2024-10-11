@@ -3,6 +3,7 @@ package com.example.apifox.utils;
 import com.example.apifox.model.MethodType;
 import com.example.apifox.model.SchemaItem;
 import com.example.apifox.model.TreeItemVO;
+import com.github.weisj.jsvg.S;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
@@ -26,13 +27,13 @@ public class FileOperation {
     String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
     String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");
     String exCloudInterface = PropertiesComponent.getInstance().getValue("ApiFox.Excloud");
-    HashSet<String> whiteList = new HashSet<>();
+    HashSet<String> whiteList = new HashSet<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","List","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
+    HashSet<String> exCloudInterfaces = new HashSet<>();
 
     public FileOperation(){
-        List<String> exCloudInterfaceList = new ArrayList<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","List","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
-        String[]  config = exCloudInterface.split("/");
-        exCloudInterfaceList.addAll(Arrays.asList(config));
-        whiteList = new HashSet<>(exCloudInterfaceList);
+        if(exCloudInterface!=null){
+            exCloudInterfaces.addAll(Arrays.stream(exCloudInterface.split("/")).toList());
+        }
     }
 
     public  void  write(Project project,String targetDirectory, String fileName, String fileContent){
@@ -156,13 +157,19 @@ public class FileOperation {
         StringBuilder ns = new StringBuilder();
         for (int i = 0; i < generics.size(); i++) {
             String g = generics.get(i);
-            if(whiteList.contains(g)){
+            if(exCloudInterface.contains(g)){
+                if(generics.size()-1==i){
+                    ns.append("API.").append(g).append(">".repeat(generics.size()-1));
+                }else {
+                    ns.append("API.").append(g).append("<");
+                }
+            } else if (whiteList.contains(g)) {
                 if(generics.size()-1==i){
                     ns.append(g).append(">".repeat(generics.size()-1));
                 }else {
                     ns.append(g).append("<");
                 }
-            }else {
+            } else {
                 if(generics.size()-1==i){
                     ns.append(namespace).append('.').append(g).append(">".repeat(generics.size()-1));
                 }else {
@@ -194,7 +201,7 @@ public class FileOperation {
 
     public void addInterfaceRow(SchemaItem item,StringBuilder interfaces,String namespace){
         List<String> generics = extractGenerics(item.interfaces);
-        if(whiteList.contains(generics.getFirst())){
+        if(exCloudInterface.contains(generics.getFirst())){
             if(item.hasChildren()){
                 item.getChildren().forEach(child->{
                     this.addInterfaceRow(child,interfaces,namespace);

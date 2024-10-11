@@ -221,10 +221,10 @@ public class FileOperation {
                      v = "string";
                  }
                  if(child.required){
-                     String temp = String.format("/**\n * %s\n */%s: %s;\n",child.description,child.key,v);
+                     String temp = String.format("/**\n * %s\n */\n%s: %s;\n",child.description,child.key,v);
                      template.set(template + temp);
                  }else {
-                     String temp = String.format("/**\n * %s\n */%s?: %s;\n",child.description,child.key,v);
+                     String temp = String.format("/**\n * %s\n */\n%s?: %s;\n",child.description,child.key,v);
                      template.set(template + temp);
                  }
                  if(child.hasChildren()){

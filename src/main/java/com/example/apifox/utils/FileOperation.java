@@ -213,8 +213,13 @@ public class FileOperation {
                  }else if(Objects.equals(v, "String")){
                      v = "string";
                  }
-                 String temp = String.format("/**\n * %s\n */%s: %s;\n",child.description,child.key,v);
-                 template.set(template + temp);
+                 if(child.required){
+                     String temp = String.format("/**\n * %s\n */%s: %s;\n",child.description,child.key,v);
+                     template.set(template + temp);
+                 }else {
+                     String temp = String.format("/**\n * %s\n */%s?: %s;\n",child.description,child.key,v);
+                     template.set(template + temp);
+                 }
                  if(child.hasChildren()){
                      cache.add(child);
                  }

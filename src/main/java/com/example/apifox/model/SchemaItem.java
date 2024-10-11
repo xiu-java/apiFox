@@ -8,6 +8,8 @@ public class SchemaItem implements TreeNode {
 
     public String type;
 
+    public Boolean required = false;
+
     public String interfaces;
 
     public String description;
@@ -15,6 +17,14 @@ public class SchemaItem implements TreeNode {
     public SchemaItem(String key,String type,String description,String interfaces){
         this.key = key;
         this.type = type;
+        this.interfaces = interfaces;
+        this.description = description;
+    }
+
+    public SchemaItem(String key,String type,Boolean required,String description,String interfaces){
+        this.key = key;
+        this.type = type;
+        this.required = required;
         this.interfaces = interfaces;
         this.description = description;
     }

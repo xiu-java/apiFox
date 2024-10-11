@@ -29,7 +29,7 @@ public class FileOperation {
     HashSet<String> whiteList = new HashSet<>();
 
     public FileOperation(){
-        List<String> exCloudInterfaceList = new ArrayList<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
+        List<String> exCloudInterfaceList = new ArrayList<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","List","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
         String[]  config = exCloudInterface.split("/");
         exCloudInterfaceList.addAll(Arrays.asList(config));
         whiteList = new HashSet<>(exCloudInterfaceList);

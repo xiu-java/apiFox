@@ -15,6 +15,7 @@ import com.intellij.openapi.project.ProjectManager;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Map;
 
 import static com.intellij.openapi.util.NullUtils.notNull;
@@ -66,6 +67,7 @@ public class SchemaData {
         SchemaItem row = new SchemaItem(key,t,"",refPath.replaceAll("«","<").replaceAll("»",">"));
         String type = schema.getType();
         Map<String, Schema> properties = schema.getProperties();
+        HashSet<String> required = new HashSet<String>(schema.getRequired());
         if(type.equals("object")){
             properties.forEach((k,v)->{
                 if(notNull(v.get$ref())){
@@ -75,17 +77,17 @@ public class SchemaData {
                         if(notNull(v.get$ref())){
                             row.add(refToItem(v.get$ref(), k,"object"));
                         }else {
-                            row.add(new SchemaItem(k,v.getType(),v.getDescription(), v.getType()));
+                            row.add(new SchemaItem(k,v.getType(),required.contains(k),v.getDescription(), v.getType()));
                         }
                     }else if(v.getType().equals("array")){
                         Schema items = v.getItems();
                         if(notNull(items.get$ref())){
                             row.add(refToItem(items.get$ref(), k,"array"));
                         }else {
-                            row.add(new SchemaItem(k,v.getType(),v.getDescription(),v.getType()));
+                            row.add(new SchemaItem(k,v.getType(),required.contains(k),v.getDescription(),v.getType()));
                         }
                     }else {
-                        row.add(new SchemaItem(k,v.getType(),v.getDescription(),v.getType()));
+                        row.add(new SchemaItem(k,v.getType(),required.contains(k),v.getDescription(),v.getType()));
                     }
                 }
             });

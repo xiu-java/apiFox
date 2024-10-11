@@ -16,6 +16,7 @@ import com.intellij.openapi.project.ProjectManager;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import static com.intellij.openapi.util.NullUtils.notNull;
@@ -67,7 +68,11 @@ public class SchemaData {
         SchemaItem row = new SchemaItem(key,t,"",refPath.replaceAll("«","<").replaceAll("»",">"));
         String type = schema.getType();
         Map<String, Schema> properties = schema.getProperties();
-        HashSet<String> required = new HashSet<String>(schema.getRequired());
+        List<String> r =  schema.getRequired();
+        HashSet<String> required = new HashSet<String>();
+        if(notNull(r)){
+            required.addAll(r);
+        }
         if(type.equals("object")){
             properties.forEach((k,v)->{
                 if(notNull(v.get$ref())){

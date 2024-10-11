@@ -3,7 +3,6 @@ package com.example.apifox.utils;
 import com.example.apifox.model.MethodType;
 import com.example.apifox.model.SchemaItem;
 import com.example.apifox.model.TreeItemVO;
-import com.github.weisj.jsvg.S;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
@@ -17,7 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static com.intellij.openapi.util.NullUtils.notNull;
 
@@ -27,7 +25,7 @@ public class FileOperation {
     String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
     String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");
     String exCloudInterface = PropertiesComponent.getInstance().getValue("ApiFox.Excloud");
-    HashSet<String> whiteList = new HashSet<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","List","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
+    HashSet<String> whiteList = new HashSet<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","List","Map<Object[]>","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
     HashSet<String> exCloudInterfaces = new HashSet<>();
 
     public FileOperation(){
@@ -51,7 +49,7 @@ public class FileOperation {
                 }
 
                 // 创建 .ts 文件路径
-                Path filePath = Paths.get(projectRootPath,targetDirectory, fileName + ".ts");
+                Path filePath = Paths.get(projectRootPath,targetDirectory, fileName);
 
                 // 写入文件内容
                 Files.writeString(filePath, fileContent+ System.lineSeparator(),StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
@@ -93,23 +91,29 @@ public class FileOperation {
         StringBuilder namespace= new StringBuilder("API");
         StringBuilder interfaceTemplate = new StringBuilder("declare namespace API {\n");
         StringBuilder apiTemplate = new StringBuilder();
-        for (String p : item.getUrl().split("/")) {
+        String[] paths = item.getUrl().split("/");
+        for (int i = 0; i < paths.length; i++) {
+           String p = paths[i];
             if(!Objects.equals(p, "")){
-                interfaceTemplate.append(String.format("namespace %s {\n", p));
+                interfaceTemplate.append("  ".repeat(i)).append(String.format("namespace %s {\n", p));
                 namespace.append('.').append(p);
             }
         }
         item.getChildren().forEach(child -> {
-        InterfaceFormat(child,interfaceTemplate,namespace.toString());
+        InterfaceFormat(child,interfaceTemplate,namespace.toString(),paths.length);
         ApiFormat(child,apiTemplate,namespace.toString());
         });
-        for (String p : item.getUrl().split("/")) {
+        for (int i = 0; i < paths.length; i++) {
+            String p = paths[i];
             if(!Objects.equals(p, "")){
-                interfaceTemplate.append("}\n");
+                interfaceTemplate.append("  ".repeat(i)).append("};\n");
             }
         }
         interfaceTemplate.append("}");
-
+        String p = item.getUrl().substring(0,item.getUrl().lastIndexOf('/'));
+        String n = item.getUrl().substring(item.getUrl().lastIndexOf('/'));
+        write(project,Paths.get(apiDir,p).toString(),n+".ts",apiTemplate.toString());
+        write(project,Paths.get(interfaceDir,p).toString(),n+".d.ts",interfaceTemplate.toString());
     }
 
     public void ApiFormat(TreeItemVO item, StringBuilder apiTemplate, String namespace){
@@ -124,7 +128,9 @@ public class FileOperation {
                     * %s
                     * GET %s
                    */
-                   export const %s: (params: %s) => Promise<%s> = (params: %s) => http.get('%s', { params });""";
+                   export const %s: (params: %s) => Promise<%s> = (params: %s) => http.get('%s', { params });
+                   
+                   """;
                 apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,queryNs,responseNs,queryNs,item.getUrl()));
             }else {
                 String responseNs = buildNs(item.response,namespace);
@@ -133,19 +139,23 @@ public class FileOperation {
                     * %s
                     * GET %s
                    */
-                   export const %s: () => Promise<%s> = () => http.get('%s');""";
+                   export const %s: () => Promise<%s> = () => http.get('%s');
+                   
+                   """;
                apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,responseNs,item.getUrl()));
             }
 
         }else{
-            String bodyNs = buildNs(item.query,namespace);
+            String bodyNs = buildNs(item.body,namespace);
             String responseNs = buildNs(item.response,namespace);
             String template = """
                    /*
                     * %s
                     * POST %s
                    */
-                   export const %s: (params: %s) => Promise<%s> = (params: %s) => http.post('%s', { params });""";
+                   export const %s: (params: %s) => Promise<%s> = (params: %s) => http.post('%s', params);
+                   
+                   """;
             apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,bodyNs,responseNs,bodyNs,item.getUrl()));
         }
 
@@ -181,35 +191,35 @@ public class FileOperation {
     }
 
 
-    public void InterfaceFormat(TreeItemVO item,StringBuilder interfaceTemplate,String namespace){
+    public void InterfaceFormat(TreeItemVO item,StringBuilder interfaceTemplate,String namespace,int level){
         String [] tags = item.getUrl().split("/");
         String name = tags[tags.length-1];
-        interfaceTemplate.append(String.format("namespace %s {",name));
+        interfaceTemplate.append("  ".repeat(level)).append(String.format("namespace %s {\n",name));
         if(notNull(item.query)){
-            addInterfaceRow(item.query,interfaceTemplate, String.format("%s.%s",namespace,name));
+            addInterfaceRow(item.query,interfaceTemplate,level+1, String.format("%s.%s",namespace,name));
         }
 
         if(notNull(item.body)){
-            addInterfaceRow(item.body,interfaceTemplate, String.format("%s.%s",namespace,name));
+            addInterfaceRow(item.body,interfaceTemplate,level+1, String.format("%s.%s",namespace,name));
         }
 
         if(notNull(item.response)){
-            addInterfaceRow(item.response,interfaceTemplate, String.format("%s.%s",namespace,name));
+            addInterfaceRow(item.response,interfaceTemplate,level+1, String.format("%s.%s",namespace,name));
         }
-        interfaceTemplate.append("};\n");
+        interfaceTemplate.append("  ".repeat(level)).append("};\n");
     }
 
-    public void addInterfaceRow(SchemaItem item,StringBuilder interfaces,String namespace){
+    public void addInterfaceRow(SchemaItem item,StringBuilder interfaces,int level,String namespace){
         List<String> generics = extractGenerics(item.interfaces);
-        if(exCloudInterface.contains(generics.getFirst())){
+        if(exCloudInterface.contains(generics.get(0))){
             if(item.hasChildren()){
                 item.getChildren().forEach(child->{
-                    this.addInterfaceRow(child,interfaces,namespace);
+                    this.addInterfaceRow(child,interfaces,level,namespace);
                 });
             }
         }else {
             if(item.hasChildren()){
-             AtomicReference<String> template = new AtomicReference<>(String.format("interface %s {\n", item.interfaces));
+             interfaces.append("  ".repeat(level)).append(String.format("interface %s {\n", item.interfaces));
              List<SchemaItem>  cache = new ArrayList<>();
              item.getChildren().forEach(child->{
                  String v = child.interfaces;
@@ -220,20 +230,20 @@ public class FileOperation {
                  }else if(Objects.equals(v, "String")){
                      v = "string";
                  }
+                 interfaces.append("  ".repeat(level+1)).append("/**\n");
+                 interfaces.append("  ".repeat(level+1)).append(String.format("* %s\n",child.description));
+                 interfaces.append("  ".repeat(level+1)).append("*/\n");
                  if(child.required){
-                     String temp = String.format("/**\n * %s\n */\n%s: %s;\n",child.description,child.key,v);
-                     template.set(template + temp);
+                     interfaces.append("  ".repeat(level+1)).append(String.format(" %s: %s;\n\n",child.key,v));
                  }else {
-                     String temp = String.format("/**\n * %s\n */\n%s?: %s;\n",child.description,child.key,v);
-                     template.set(template + temp);
+                     interfaces.append("  ".repeat(level+1)).append(String.format(" %s?: %s;\n\n",child.key,v));
                  }
                  if(child.hasChildren()){
                      cache.add(child);
                  }
              });
-             template.set(template+"}\n");
-             interfaces.append(template);
-                cache.forEach(c->addInterfaceRow(c,interfaces,namespace));
+            interfaces.append("  ".repeat(level)).append("};\n");
+            cache.forEach(c->addInterfaceRow(c,interfaces,level,namespace));
             }
         }
     };

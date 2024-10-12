@@ -3,7 +3,6 @@ package com.example.apifox.utils;
 import com.example.apifox.model.MethodType;
 import com.example.apifox.model.SchemaItem;
 import com.example.apifox.model.TreeItemVO;
-import com.github.weisj.jsvg.S;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
@@ -34,6 +33,7 @@ public class FileOperation {
             exCloudInterfaces.addAll(Arrays.stream(exCloudInterface.split("/")).toList());
         }
     }
+
 
     public  void  write(Project project,String targetDirectory, String fileName, String fileContent){
         WriteCommandAction.runWriteCommandAction(project, () -> {
@@ -86,6 +86,7 @@ public class FileOperation {
             }
         });
     }
+
     public void createApi(Project project,TreeItemVO item){
         clear(project,apiDir+item.getUrl()+ ".ts");
         clear(project,interfaceDir+item.getUrl()+ ".d.ts");
@@ -111,7 +112,6 @@ public class FileOperation {
                 interfaceTemplate.append("  ".repeat(paths.length-i)).append("};\n");
             }
         }
-
         interfaceTemplate.append("};");
         String p = item.getUrl().substring(0,item.getUrl().lastIndexOf('/'));
         String n = item.getUrl().substring(item.getUrl().lastIndexOf('/'));
@@ -124,8 +124,8 @@ public class FileOperation {
         String name = tags[tags.length-1];
         if(item.getMethod() == MethodType.GET){
             if(notNull(item.query)&&notNull(item.response)){
-                String queryNs = buildNs(item.query,namespace);
-                String responseNs = buildNs(item.response,namespace);
+                String queryNs = buildNs(item.query,String.format("%s.%s",namespace,name));
+                String responseNs = buildNs(item.query,String.format("%s.%s",namespace,name));
                 String template = """
                    /*
                     * %s
@@ -136,7 +136,7 @@ public class FileOperation {
                    """;
                 apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,queryNs,responseNs,queryNs,item.getUrl()));
             }else if(notNull(item.response)){
-                String responseNs = buildNs(item.response,namespace);
+                String responseNs = buildNs(item.query,String.format("%s.%s",namespace,name));
                 String template = """
                    /*
                     * %s
@@ -150,8 +150,8 @@ public class FileOperation {
 
         }else{
             if(notNull(item.query)&&notNull(item.response)){
-                String bodyNs = buildNs(item.body,namespace);
-                String responseNs = buildNs(item.response,namespace);
+                String bodyNs = buildNs(item.query,String.format("%s.%s",namespace,name));
+                String responseNs = buildNs(item.query,String.format("%s.%s",namespace,name));
                 String template = """
                    /*
                     * %s

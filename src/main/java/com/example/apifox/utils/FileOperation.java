@@ -123,7 +123,7 @@ public class FileOperation {
         String [] tags = item.getUrl().split("/");
         String name = tags[tags.length-1];
         if(item.getMethod() == MethodType.GET){
-            if(notNull(item.query)&&notNull(item.response)){
+            if(notNull(item.query)){
                 String queryNs = buildNs(item.query,String.format("%s.%s",namespace,name));
                 String responseNs = buildNs(item.query,String.format("%s.%s",namespace,name));
                 String template = """
@@ -149,7 +149,7 @@ public class FileOperation {
             }
 
         }else{
-            if(notNull(item.query)&&notNull(item.response)){
+            if(notNull(item.query)){
                 String bodyNs = buildNs(item.query,String.format("%s.%s",namespace,name));
                 String responseNs = buildNs(item.query,String.format("%s.%s",namespace,name));
                 String template = """

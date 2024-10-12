@@ -25,7 +25,7 @@ public class FileOperation {
     String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
     String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");
     String exCloudInterface = PropertiesComponent.getInstance().getValue("ApiFox.Excloud");
-    HashSet<String> whiteList = new HashSet<>(Arrays.asList("object", "integer", "boolean","string","null","number","any","date","list","map","array","map","set","Object","record","integer[]","Boolean[]","Date[]","Boolean"));
+    HashSet<String> whiteList = new HashSet<>(Arrays.asList("object", "integer", "boolean","string","null","number","any","date","list","map","array","map","set","record","integer[]","boolean[]","date[]","object[]"));
     HashSet<String> exCloudInterfaces = new HashSet<>();
 
     public FileOperation(){
@@ -174,7 +174,7 @@ public class FileOperation {
                 String[] gs = g.split(",");
                 for (int j = 0; j < gs.length; j++) {
                     String c = gs[j];
-                    if(exCloudInterface.contains(c.toLowerCase())){
+                    if(exCloudInterface.contains(c)){
                         if(generics.size()-1==i&&gs.length-1==j){
                             ns.append("API.").append(c).append(">".repeat(generics.size()-1));
                         }else {
@@ -195,7 +195,7 @@ public class FileOperation {
                     }
                 }
             }else {
-                if(exCloudInterface.contains(g.toLowerCase())){
+                if(exCloudInterface.contains(g)){
                     if(generics.size()-1==i){
                         ns.append("API.").append(g).append(">".repeat(generics.size()-1));
                     }else {
@@ -241,7 +241,7 @@ public class FileOperation {
 
     public void addInterfaceRow(SchemaItem item,StringBuilder interfaces,int level,String namespace){
         List<String> generics = extractGenerics(item.interfaces);
-        if(exCloudInterfaces.contains(generics.get(0).toLowerCase())||whiteList.contains(generics.get(0).toLowerCase())){
+        if(exCloudInterfaces.contains(generics.get(0))||whiteList.contains(generics.get(0).toLowerCase())){
             if(item.hasChildren()){
                 item.getChildren().forEach(child->{
                     this.addInterfaceRow(child,interfaces,level,namespace);

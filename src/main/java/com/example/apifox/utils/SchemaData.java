@@ -1,6 +1,5 @@
 package com.example.apifox.utils;
 
-import com.example.apifox.component.ApiService;
 import com.example.apifox.component.DataSourceService;
 import com.example.apifox.model.SchemaItem;
 import com.example.apifox.model.TreeItemVO;
@@ -10,20 +9,15 @@ import com.example.apifox.model.openapi.v3.models.media.Schema;
 import com.example.apifox.model.openapi.v3.models.parameters.Parameter;
 import com.example.apifox.model.openapi.v3.models.parameters.RequestBody;
 import com.example.apifox.model.openapi.v3.models.responses.ApiResponses;
-import com.example.apifox.service.ApiServiceImpl;
 import com.example.apifox.service.DataSourceServiceImpl;
 import com.intellij.openapi.project.ProjectManager;
-
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
 import static com.intellij.openapi.util.NullUtils.notNull;
-
 public class SchemaData {
-
     public SchemaData(){
 
     }

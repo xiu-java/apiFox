@@ -25,7 +25,7 @@ public class FileOperation {
     String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
     String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");
     String exCloudInterface = PropertiesComponent.getInstance().getValue("ApiFox.Excloud");
-    HashSet<String> whiteList = new HashSet<>(Arrays.asList("Object", "integer", "Boolean","string","Null","Number","Date","List","Map<Object[]>","Array","Map","Set","Object[]","String[]","integer[]","Boolean[]","Date[]"));
+    HashSet<String> whiteList = new HashSet<>(Arrays.asList("Object", "integer", "boolean","string","null","Number","Date","List","Map","Array","Map","Set","Object","Record","integer[]","Boolean[]","Date[]"));
     HashSet<String> exCloudInterfaces = new HashSet<>();
 
     public FileOperation(){
@@ -100,16 +100,18 @@ public class FileOperation {
             }
         }
         item.getChildren().forEach(child -> {
-        InterfaceFormat(child,interfaceTemplate,namespace.toString(),paths.length);
-        ApiFormat(child,apiTemplate,namespace.toString());
+           InterfaceFormat(child,interfaceTemplate,namespace.toString(),paths.length);
+           ApiFormat(child,apiTemplate,namespace.toString());
         });
+        interfaceTemplate.deleteCharAt(interfaceTemplate.length()-1);
         for (int i = 0; i < paths.length; i++) {
             String p = paths[i];
             if(!Objects.equals(p, "")){
-                interfaceTemplate.append("  ".repeat(i)).append("};\n");
+                interfaceTemplate.append("  ".repeat(paths.length-i)).append("};\n");
             }
         }
-        interfaceTemplate.append("}");
+
+        interfaceTemplate.append("};");
         String p = item.getUrl().substring(0,item.getUrl().lastIndexOf('/'));
         String n = item.getUrl().substring(item.getUrl().lastIndexOf('/'));
         write(project,Paths.get(apiDir,p).toString(),n+".ts",apiTemplate.toString());
@@ -206,12 +208,13 @@ public class FileOperation {
         if(notNull(item.response)){
             addInterfaceRow(item.response,interfaceTemplate,level+1, String.format("%s.%s",namespace,name));
         }
-        interfaceTemplate.append("  ".repeat(level)).append("};\n");
+        interfaceTemplate.deleteCharAt(interfaceTemplate.length()-1);
+        interfaceTemplate.append("  ".repeat(level)).append("};\n\n");
     }
 
     public void addInterfaceRow(SchemaItem item,StringBuilder interfaces,int level,String namespace){
         List<String> generics = extractGenerics(item.interfaces);
-        if(exCloudInterface.contains(generics.get(0))){
+        if(exCloudInterfaces.contains(generics.get(0))||whiteList.contains(generics.get(0))){
             if(item.hasChildren()){
                 item.getChildren().forEach(child->{
                     this.addInterfaceRow(child,interfaces,level,namespace);
@@ -223,21 +226,13 @@ public class FileOperation {
              List<SchemaItem>  cache = new ArrayList<>();
                 for (int i = 0; i <item.getChildren().size() ; i++) {
                     SchemaItem child = item.getChildren().get(i);
-                    String v = child.interfaces;
-                    if(Objects.equals(v, "Integer")){
-                        v = "number";
-                    }else if(Objects.equals(v, "Boolean")){
-                        v = "boolean";
-                    }else if(Objects.equals(v, "String")){
-                        v = "string";
-                    }
                     interfaces.append("  ".repeat(level+1)).append("/**\n");
                     interfaces.append("  ".repeat(level+1)).append(String.format("* %s\n",child.description));
                     interfaces.append("  ".repeat(level+1)).append("*/\n");
                     if(child.required){
-                        interfaces.append("  ".repeat(level+1)).append(String.format(" %s: %s;\n",child.key,v));
+                        interfaces.append("  ".repeat(level+1)).append(String.format(" %s: %s;\n",child.key,transformType(child)));
                     }else {
-                        interfaces.append("  ".repeat(level+1)).append(String.format(" %s?: %s;\n",child.key,v));
+                        interfaces.append("  ".repeat(level+1)).append(String.format(" %s?: %s;\n",child.key,transformType(child)));
                     }
                     if(child.hasChildren()){
                         cache.add(child);
@@ -246,11 +241,19 @@ public class FileOperation {
                         interfaces.append('\n');
                     }
                 }
-            interfaces.append("  ".repeat(level)).append("};\n");
+            interfaces.append("  ".repeat(level)).append("};\n\n");
             cache.forEach(c->addInterfaceRow(c,interfaces,level,namespace));
             }
         }
     };
+
+    public String transformType(SchemaItem item){
+        if(Objects.equals(item.type, "array")){
+            return  String.format("Array<%s>",item.interfaces);
+        }else {
+            return  item.interfaces;
+        }
+    }
 
 
     private static List<String> extractGenerics(String input) {

@@ -22,7 +22,7 @@ import java.util.Map;
 import static com.intellij.openapi.util.NullUtils.notNull;
 
 public class SchemaData {
-    DataSourceService dataSourceService = DataSourceServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
+
     public SchemaData(){
 
     }
@@ -61,9 +61,9 @@ public class SchemaData {
     }
 
     public SchemaItem refToItem(String ref, String key,String t){
+        DataSourceService dataSourceService = DataSourceServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
         String refPath = URLDecoder.decode(ref.substring(ref.lastIndexOf("/")+1), StandardCharsets.UTF_8);
         Components components = dataSourceService.getComponents();
-
         Schema schema = components.getSchemas().get(refPath);
         SchemaItem row = new SchemaItem(key,t,"",refPath.replaceAll("«","<").replaceAll("»",">"));
         String type = schema.getType();
@@ -82,23 +82,28 @@ public class SchemaData {
                         if(notNull(v.get$ref())){
                             row.add(refToItem(v.get$ref(), k,"object"));
                         }else {
-                            row.add(new SchemaItem(k,v.getType(),required.contains(k),v.getDescription(), v.getType()));
+                            row.add(new SchemaItem(k,transformType(v.getType()),required.contains(k),v.getDescription(), transformType(v.getType())));
                         }
                     }else if(v.getType().equals("array")){
                         Schema items = v.getItems();
                         if(notNull(items.get$ref())){
                             row.add(refToItem(items.get$ref(), k,"array"));
                         }else {
-                            row.add(new SchemaItem(k,v.getType(),required.contains(k),v.getDescription(),v.getType()));
+                            row.add(new SchemaItem(k,transformType(v.getType()),required.contains(k),v.getDescription(),transformType(items.getType())));
                         }
                     }else {
-                        row.add(new SchemaItem(k,v.getType(),required.contains(k),v.getDescription(),v.getType()));
+                        row.add(new SchemaItem(k,transformType(v.getType()),required.contains(k),v.getDescription(),transformType(v.getType())));
                     }
                 }
             });
         }
         return row;
     }
-
+   public String  transformType(String type){
+        if(type.equals("integer")){
+            return "number";
+        }
+        return type;
+   }
 
 }

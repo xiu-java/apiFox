@@ -3,6 +3,7 @@ package com.example.apifox.utils;
 import com.example.apifox.model.MethodType;
 import com.example.apifox.model.SchemaItem;
 import com.example.apifox.model.TreeItemVO;
+import com.github.weisj.jsvg.S;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
@@ -25,7 +26,7 @@ public class FileOperation {
     String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
     String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");
     String exCloudInterface = PropertiesComponent.getInstance().getValue("ApiFox.Excloud");
-    HashSet<String> whiteList = new HashSet<>(Arrays.asList("Object", "integer", "boolean","string","null","Number","Date","List","Map","Array","Map","Set","Object","Record","integer[]","Boolean[]","Date[]"));
+    HashSet<String> whiteList = new HashSet<>(Arrays.asList("object", "integer", "boolean","string","null","number","any","date","list","map","array","map","set","Object","record","integer[]","Boolean[]","Date[]","Boolean"));
     HashSet<String> exCloudInterfaces = new HashSet<>();
 
     public FileOperation(){
@@ -122,7 +123,7 @@ public class FileOperation {
         String [] tags = item.getUrl().split("/");
         String name = tags[tags.length-1];
         if(item.getMethod() == MethodType.GET){
-            if(notNull(item.query)){
+            if(notNull(item.query)&&notNull(item.response)){
                 String queryNs = buildNs(item.query,namespace);
                 String responseNs = buildNs(item.response,namespace);
                 String template = """
@@ -134,7 +135,7 @@ public class FileOperation {
                    
                    """;
                 apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,queryNs,responseNs,queryNs,item.getUrl()));
-            }else {
+            }else if(notNull(item.response)){
                 String responseNs = buildNs(item.response,namespace);
                 String template = """
                    /*
@@ -148,9 +149,10 @@ public class FileOperation {
             }
 
         }else{
-            String bodyNs = buildNs(item.body,namespace);
-            String responseNs = buildNs(item.response,namespace);
-            String template = """
+            if(notNull(item.query)&&notNull(item.response)){
+                String bodyNs = buildNs(item.body,namespace);
+                String responseNs = buildNs(item.response,namespace);
+                String template = """
                    /*
                     * %s
                     * POST %s
@@ -158,7 +160,8 @@ public class FileOperation {
                    export const %s: (params: %s) => Promise<%s> = (params: %s) => http.post('%s', params);
                    
                    """;
-            apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,bodyNs,responseNs,bodyNs,item.getUrl()));
+                apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,bodyNs,responseNs,bodyNs,item.getUrl()));
+            }
         }
 
     }
@@ -169,23 +172,51 @@ public class FileOperation {
         StringBuilder ns = new StringBuilder();
         for (int i = 0; i < generics.size(); i++) {
             String g = generics.get(i);
-            if(exCloudInterface.contains(g)){
-                if(generics.size()-1==i){
-                    ns.append("API.").append(g).append(">".repeat(generics.size()-1));
-                }else {
-                    ns.append("API.").append(g).append("<");
+            if(g.indexOf(',')!=-1){
+                String[] gs = g.split(",");
+                for (int j = 0; j < gs.length; j++) {
+                    String c = gs[j];
+                    if(exCloudInterface.contains(c.toLowerCase())){
+                        if(generics.size()-1==i&&gs.length-1==j){
+                            ns.append("API.").append(c).append(">".repeat(generics.size()-1));
+                        }else {
+                            ns.append("API.").append(c).append(".");
+                        }
+                    } else if (whiteList.contains(c.toLowerCase())) {
+                        if(generics.size()-1==i&&gs.length-1==j){
+                            ns.append(c).append(">".repeat(generics.size()-1));
+                        }else {
+                            ns.append(c).append(".");
+                        }
+                    } else {
+                        if(generics.size()-1==i&&gs.length-1==j){
+                            ns.append(namespace).append('.').append(c).append(">".repeat(generics.size()-1));
+                        }else {
+                            ns.append(namespace).append('.').append(c).append(".");
+                        }
+                    }
                 }
-            } else if (whiteList.contains(g)) {
-                if(generics.size()-1==i){
-                    ns.append(g).append(">".repeat(generics.size()-1));
-                }else {
-                    ns.append(g).append("<");
-                }
-            } else {
-                if(generics.size()-1==i){
-                    ns.append(namespace).append('.').append(g).append(">".repeat(generics.size()-1));
-                }else {
-                    ns.append(namespace).append('.').append(g).append("<");
+
+
+            }else {
+                if(exCloudInterface.contains(g.toLowerCase())){
+                    if(generics.size()-1==i){
+                        ns.append("API.").append(g).append(">".repeat(generics.size()-1));
+                    }else {
+                        ns.append("API.").append(g).append("<");
+                    }
+                } else if (whiteList.contains(g.toLowerCase())) {
+                    if(generics.size()-1==i){
+                        ns.append(g).append(">".repeat(generics.size()-1));
+                    }else {
+                        ns.append(g).append("<");
+                    }
+                } else {
+                    if(generics.size()-1==i){
+                        ns.append(namespace).append('.').append(g).append(">".repeat(generics.size()-1));
+                    }else {
+                        ns.append(namespace).append('.').append(g).append("<");
+                    }
                 }
             }
         }
@@ -214,7 +245,7 @@ public class FileOperation {
 
     public void addInterfaceRow(SchemaItem item,StringBuilder interfaces,int level,String namespace){
         List<String> generics = extractGenerics(item.interfaces);
-        if(exCloudInterfaces.contains(generics.get(0))||whiteList.contains(generics.get(0))){
+        if(exCloudInterfaces.contains(generics.get(0).toLowerCase())||whiteList.contains(generics.get(0).toLowerCase())){
             if(item.hasChildren()){
                 item.getChildren().forEach(child->{
                     this.addInterfaceRow(child,interfaces,level,namespace);

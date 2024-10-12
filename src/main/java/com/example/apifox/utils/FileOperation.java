@@ -125,7 +125,7 @@ public class FileOperation {
         if(item.getMethod() == MethodType.GET){
             if(notNull(item.query)){
                 String queryNs = buildNs(item.query,String.format("%s.%s",namespace,name));
-                String responseNs = buildNs(item.query,String.format("%s.%s",namespace,name));
+                String responseNs = buildNs(item.response,String.format("%s.%s",namespace,name));
                 String template = """
                    /*
                     * %s
@@ -136,7 +136,7 @@ public class FileOperation {
                    """;
                 apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,queryNs,responseNs,queryNs,item.getUrl()));
             }else if(notNull(item.response)){
-                String responseNs = buildNs(item.query,String.format("%s.%s",namespace,name));
+                String responseNs = buildNs(item.response,String.format("%s.%s",namespace,name));
                 String template = """
                    /*
                     * %s
@@ -149,10 +149,9 @@ public class FileOperation {
             }
 
         }else{
-            if(notNull(item.query)){
-                String bodyNs = buildNs(item.query,String.format("%s.%s",namespace,name));
-                String responseNs = buildNs(item.query,String.format("%s.%s",namespace,name));
-                String template = """
+            String bodyNs = buildNs(item.body,String.format("%s.%s",namespace,name));
+            String responseNs = buildNs(item.response,String.format("%s.%s",namespace,name));
+            String template = """
                    /*
                     * %s
                     * POST %s
@@ -160,8 +159,7 @@ public class FileOperation {
                    export const %s: (params: %s) => Promise<%s> = (params: %s) => http.post('%s', params);
                    
                    """;
-                apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,bodyNs,responseNs,bodyNs,item.getUrl()));
-            }
+            apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,bodyNs,responseNs,bodyNs,item.getUrl()));
         }
 
     }

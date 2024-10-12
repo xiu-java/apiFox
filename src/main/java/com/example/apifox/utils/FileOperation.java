@@ -196,8 +196,6 @@ public class FileOperation {
                         }
                     }
                 }
-
-
             }else {
                 if(exCloudInterface.contains(g.toLowerCase())){
                     if(generics.size()-1==i){

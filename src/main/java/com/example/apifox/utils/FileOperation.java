@@ -3,6 +3,10 @@ package com.example.apifox.utils;
 import com.example.apifox.model.MethodType;
 import com.example.apifox.model.SchemaItem;
 import com.example.apifox.model.TreeItemVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
@@ -28,10 +32,30 @@ public class FileOperation {
     HashSet<String> whiteList = new HashSet<>(Arrays.asList("object", "integer", "boolean","string","null","number","any","date","list","map","array","map","set","Object","record","integer[]","Boolean[]","Date[]","Boolean"));
     HashSet<String> exCloudInterfaces = new HashSet<>();
 
-    public FileOperation(){
+    public FileOperation() {
         if(exCloudInterface!=null){
             exCloudInterfaces.addAll(Arrays.stream(exCloudInterface.split("/")).toList());
         }
+        try {
+            toJson();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void  toJson() throws JsonProcessingException {
+        String xml = "<Person><Name>John Doe</Name><Age>30</Age></Person>";
+
+        // 使用XmlMapper解析XML
+        XmlMapper xmlMapper = new XmlMapper();
+        JsonNode rootNode = xmlMapper.readTree(xml);
+
+        // 使用ObjectMapper将JsonNode转换为JSON字符串
+        ObjectMapper jsonMapper = new ObjectMapper();
+        String json = jsonMapper.writeValueAsString(rootNode);
+
+        System.out.println(json);
     }
 
 

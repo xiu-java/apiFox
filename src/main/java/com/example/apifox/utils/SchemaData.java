@@ -1,6 +1,5 @@
 package com.example.apifox.utils;
 
-import com.example.apifox.component.DataSourceService;
 import com.example.apifox.model.SchemaItem;
 import com.example.apifox.model.TreeItemVO;
 import com.example.apifox.model.openapi.v3.models.Components;
@@ -9,13 +8,15 @@ import com.example.apifox.model.openapi.v3.models.media.Schema;
 import com.example.apifox.model.openapi.v3.models.parameters.Parameter;
 import com.example.apifox.model.openapi.v3.models.parameters.RequestBody;
 import com.example.apifox.model.openapi.v3.models.responses.ApiResponses;
-import com.example.apifox.service.DataSourceServiceImpl;
+import com.example.apifox.service.ProjectConfig;
 import com.intellij.openapi.project.ProjectManager;
+
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
 import static com.intellij.openapi.util.NullUtils.notNull;
 public class SchemaData {
     public SchemaData(){
@@ -60,7 +61,7 @@ public class SchemaData {
     }
 
     public SchemaItem refToItem(String ref, String key,String t){
-        DataSourceService dataSourceService = DataSourceServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
+        ProjectConfig dataSourceService = ProjectConfig.getInstance(ProjectManager.getInstance().getDefaultProject());
         String refPath = URLDecoder.decode(ref.substring(ref.lastIndexOf("/")+1), StandardCharsets.UTF_8);
         Components components = dataSourceService.getComponents();
         Schema schema = components.getSchemas().get(refPath);
@@ -71,7 +72,7 @@ public class SchemaData {
         HashSet<String> required = new HashSet<String>();
         if(notNull(r)){
             required.addAll(r);
-        }
+            }
         if(type.equals("object")){
             properties.forEach((k,v)->{
                 if(notNull(v.get$ref())){

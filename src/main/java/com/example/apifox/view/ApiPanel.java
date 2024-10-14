@@ -1,18 +1,11 @@
 package com.example.apifox.view;
 
 import com.example.apifox.component.ApiService;
-import com.example.apifox.component.DataSourceService;
 import com.example.apifox.interfaces.DetailDelegate;
 import com.example.apifox.model.TreeItemVO;
-import com.example.apifox.model.openapi.v3.models.Components;
 import com.example.apifox.model.openapi.v3.models.OpenAPI;
 import com.example.apifox.service.ApiServiceImpl;
-import com.example.apifox.service.DataSourceServiceImpl;
-import com.example.apifox.utils.FileOperation;
-import com.intellij.ide.DataManager;
-import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.project.Project;
+import com.example.apifox.service.ProjectConfig;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.ui.JBColor;
 
@@ -26,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ApiPanel extends JPanel {
     CardLayout cardLayout = new CardLayout();
-    DataSourceService dataSourceService = DataSourceServiceImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
+    ProjectConfig dataSourceService = ProjectConfig.getInstance(ProjectManager.getInstance().getDefaultProject());
     private final SourcePanel sourcePane =new SourcePanel();
     private final LoadingPanel loadingPanel =new LoadingPanel("加载中...",15,0);
     public ApiPanel(DetailDelegate detailDelegate) {

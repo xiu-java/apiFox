@@ -29,6 +29,7 @@
                         serviceImplementation="com.example.apifox.service.ApiServiceImpl"/>
     <projectService serviceInterface="com.example.apifox.component.DataSourceService"
                         serviceImplementation="com.example.apifox.service.DataSourceServiceImpl"/>
+    <projectService serviceImplementation="com.example.apifox.service.ProjectConfig"/>
     <projectConfigurable groupId="tools" displayName="apifox Config" id="test.id"
                          instance="com.example.apifox.controller.SettingFactory"/>
     <!-- 窗体 (IDEA 界面右侧) -->

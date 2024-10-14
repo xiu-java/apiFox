@@ -48,7 +48,7 @@ public class SourceManage implements ToolWindowFactory, ComponentDelegate<Long>,
         // 获取内容工厂的实例
         ContentFactory contentFactory = ContentFactory.getInstance();
         // 创建内容
-        Content home = contentFactory.createContent(new JBScrollPane(projectPanel), "Home", false);
+        Content home = contentFactory.createContent(new JBScrollPane(projectPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), "Home", false);
         Content apis = contentFactory.createContent(apiPanel, "Apis", false);
         Content detail = contentFactory.createContent(detailPanel, "Detail", false);
         toolWindow.getContentManager().addContent(home);

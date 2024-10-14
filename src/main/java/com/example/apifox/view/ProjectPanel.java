@@ -2,6 +2,8 @@ package com.example.apifox.view;
 
 import com.example.apifox.component.DataSourceService;
 import com.example.apifox.interfaces.ComponentDelegate;
+import com.example.apifox.layout.ContentLayout;
+import com.example.apifox.layout.ProjectGroupLayout;
 import com.example.apifox.model.ProjectVO;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.ui.JBColor;
@@ -25,7 +27,7 @@ public class ProjectPanel extends JPanel {
 
     public ProjectPanel(ComponentDelegate<Long> componentDelegate) {
         delegate = componentDelegate;
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new CustomFlowLayout());
         configUi();
     }
 
@@ -36,7 +38,7 @@ public class ProjectPanel extends JPanel {
         list.forEach((projectKey, items) -> {
             JPanel groupPanel = new JPanel() {
                 {
-                    setLayout(new BorderLayout(5, 5));
+                    setLayout(new ProjectGroupLayout());
                     configUi();
                 }
 
@@ -48,9 +50,9 @@ public class ProjectPanel extends JPanel {
                    title.setForeground(JBColor.foreground().darker());
                    title.setPreferredSize(new Dimension(title.getWidth(),30));
                    title.setBorder(JBUI.Borders.emptyLeft(10));
-                   add(title, BorderLayout.NORTH);
-                   JPanel content = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 15));
-                    SwingUtilities.invokeLater(()->{
+                   add(title);
+                   JPanel content = new JPanel(new ContentLayout());
+                   SwingUtilities.invokeLater(()->{
                         items.forEach((item)->{
                             JPanel projectView = new JPanel(new GridBagLayout());
 //                            projectView.setBackground(Color.blue);
@@ -76,8 +78,7 @@ public class ProjectPanel extends JPanel {
                             content.add(projectView);
                         });
                     });
-
-                   add(content, BorderLayout.CENTER);
+                   add(content);
                 }
 
                 private static @NotNull RoundImageIcon getIcon(ProjectVO item) {
@@ -95,11 +96,57 @@ public class ProjectPanel extends JPanel {
                     return icon;
                 }
             };
-
             add(groupPanel);
         });
 
 
+    }
+    // 自定义FlowLayout类
+    public static class CustomFlowLayout extends FlowLayout {
+        public CustomFlowLayout() {
+            super(FlowLayout.LEFT, 5, 5);
+        }
+
+        @Override
+        public Dimension preferredLayoutSize(Container parent) {
+            synchronized (parent.getTreeLock()) {
+                int ncomponents = parent.getComponentCount();
+                int maxWidth = parent.getWidth() - getHgap() * 2;
+                int maxHeight = 0;
+
+                for (int i = 0; i < ncomponents; i++) {
+                    Component comp = parent.getComponent(i);
+                    if (comp.isVisible()) {
+                        Dimension d = comp.getPreferredSize();
+                        comp.setSize(maxWidth, d.height); // 设置宽度为父容器的宽度
+                        maxHeight += d.height + getVgap();
+                    }
+                }
+
+                return new Dimension(maxWidth, maxHeight - getVgap());
+            }
+        }
+
+        @Override
+        public void layoutContainer(Container parent) {
+            synchronized (parent.getTreeLock()) {
+                int ncomponents = parent.getComponentCount();
+                int maxWidth = parent.getWidth() - getHgap() * 2;
+                int maxHeight = 0;
+                int x = getHgap();
+                int y = getVgap();
+
+                for (int i = 0; i < ncomponents; i++) {
+                    Component comp = parent.getComponent(i);
+                    if (comp.isVisible()) {
+                        Dimension d = comp.getPreferredSize();
+                        comp.setSize(maxWidth, d.height); // 设置宽度为父容器的宽度
+                        comp.setBounds(x, y, maxWidth, d.height);
+                        y += d.height + getVgap();
+                    }
+                }
+            }
+        }
     }
 
 }

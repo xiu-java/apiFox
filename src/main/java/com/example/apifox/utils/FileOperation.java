@@ -7,6 +7,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
@@ -37,7 +39,8 @@ public class FileOperation {
     String exCloudInterface = PropertiesComponent.getInstance().getValue("ApiFox.Excloud");
     HashSet<String> whiteList = new HashSet<>(Arrays.asList("object", "integer", "boolean","string","null","number","any","date","list","map","array","map","set","record","integer[]","boolean[]","date[]","object[]"));
     HashSet<String> exCloudInterfaces = new HashSet<>();
-
+    Configuration config = null;
+    final private Gson gson = new GsonBuilder().create();
     public FileOperation() {
         if(exCloudInterface!=null){
             exCloudInterfaces.addAll(Arrays.stream(exCloudInterface.split("/")).toList());
@@ -51,17 +54,14 @@ public class FileOperation {
 
 
     public void  toJson() throws JsonProcessingException {
-        String xml = "<Person><Name>John Doe</Name><Age>30</Age></Person>";
 
         // 使用XmlMapper解析XML
         XmlMapper xmlMapper = new XmlMapper();
-        JsonNode rootNode = xmlMapper.readTree(xml);
-
+        JsonNode rootNode = xmlMapper.readTree(template);
         // 使用ObjectMapper将JsonNode转换为JSON字符串
         ObjectMapper jsonMapper = new ObjectMapper();
         String json = jsonMapper.writeValueAsString(rootNode);
-
-        System.out.println(json);
+        config = gson.fromJson(json, Configuration.class);
     }
 
 
@@ -122,7 +122,7 @@ public class FileOperation {
         clear(project,interfaceDir+item.getUrl()+ ".d.ts");
         StringBuilder namespace= new StringBuilder("API");
         StringBuilder interfaceTemplate = new StringBuilder("declare namespace API {\n");
-        StringBuilder apiTemplate = new StringBuilder();
+        StringBuilder apiTemplate = new StringBuilder(config.getHeader());
         String[] paths = item.getUrl().split("/");
         for (int i = 0; i < paths.length; i++) {
            String p = paths[i];
@@ -380,4 +380,24 @@ public class FileOperation {
         // 如果没有匹配到泛型，直接添加当前字符串
     }
 
+    private  static  class Configuration {
+        public String header;
+        public List<String> exCloudInterfaces;
+
+        public String getHeader() {
+            return header;
+        }
+
+        public void setHeader(String header) {
+            this.header = header;
+        }
+
+        public List<String> getExCloudInterfaces() {
+            return exCloudInterfaces;
+        }
+
+        public void setExCloudInterfaces(List<String> exCloudInterfaces) {
+            this.exCloudInterfaces = exCloudInterfaces;
+        }
+    }
 }

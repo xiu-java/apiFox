@@ -42,18 +42,22 @@ public class SchemaData {
         RequestBody requestBody = operation.getRequestBody();
 
         if(notNull(requestBody)){
-            String ref =requestBody.getContent().get("application/json").getSchema().get$ref();
-            if(notNull(ref)){
-                node.body = refToItem(ref,"root","object");
+            if(notNull(requestBody.getContent().get("application/json"))){
+                String ref =requestBody.getContent().get("application/json").getSchema().get$ref();
+                if(notNull(ref)){
+                    node.body = refToItem(ref,"root","object");
+                }
             }
         }
         ApiResponses responses = operation.getResponses();
 
         if(notNull(responses)){
             responses.forEach((k,v)->{
-                String ref = v.getContent().get("application/json").getSchema().get$ref();
-                if(notNull(ref)){
-                    node.response = refToItem(ref,"root", "object");
+                if(notNull(v.getContent().get("application/json"))){
+                    String ref = v.getContent().get("application/json").getSchema().get$ref();
+                    if(notNull(ref)){
+                        node.response = refToItem(ref,"root", "object");
+                    }
                 }
             });
         }

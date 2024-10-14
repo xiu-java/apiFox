@@ -8,7 +8,7 @@ import com.example.apifox.model.openapi.v3.models.media.Schema;
 import com.example.apifox.model.openapi.v3.models.parameters.Parameter;
 import com.example.apifox.model.openapi.v3.models.parameters.RequestBody;
 import com.example.apifox.model.openapi.v3.models.responses.ApiResponses;
-import com.example.apifox.service.ProjectConfig;
+import com.example.apifox.service.ProjectConfigImpl;
 import com.intellij.openapi.project.ProjectManager;
 
 import java.net.URLDecoder;
@@ -61,7 +61,7 @@ public class SchemaData {
     }
 
     public SchemaItem refToItem(String ref, String key,String t){
-        ProjectConfig dataSourceService = ProjectConfig.getInstance(ProjectManager.getInstance().getDefaultProject());
+        ProjectConfigImpl dataSourceService = ProjectConfigImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
         String refPath = URLDecoder.decode(ref.substring(ref.lastIndexOf("/")+1), StandardCharsets.UTF_8);
         Components components = dataSourceService.getComponents();
         Schema schema = components.getSchemas().get(refPath);

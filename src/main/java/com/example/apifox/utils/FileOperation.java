@@ -15,11 +15,17 @@ import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static com.intellij.openapi.util.NullUtils.notNull;
 
@@ -146,46 +152,80 @@ public class FileOperation {
     public void ApiFormat(TreeItemVO item, StringBuilder apiTemplate, String namespace){
         String [] tags = item.getUrl().split("/");
         String name = tags[tags.length-1];
-        if(item.getMethod() == MethodType.GET){
-            if(notNull(item.query)){
-                String queryNs = buildNs(item.query,String.format("%s.%s",namespace,name));
-                String responseNs = buildNs(item.response,String.format("%s.%s",namespace,name));
-                String template = """
-                   /*
-                    * %s
-                    * GET %s
-                   */
-                   export const %s: (params: %s) => Promise<%s> = (params: %s) => http.get('%s', { params });
-                   
-                   """;
-                apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,queryNs,responseNs,queryNs,item.getUrl()));
-            }else if(notNull(item.response)){
-                String responseNs = buildNs(item.response,String.format("%s.%s",namespace,name));
-                String template = """
-                   /*
-                    * %s
-                    * GET %s
-                   */
-                   export const %s: () => Promise<%s> = () => http.get('%s');
-                   
-                   """;
-               apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,responseNs,item.getUrl()));
-            }
-
-        }else{
-            String bodyNs = buildNs(item.body,String.format("%s.%s",namespace,name));
-            String responseNs = buildNs(item.response,String.format("%s.%s",namespace,name));
-            String template = """
-                   /*
-                    * %s
-                    * POST %s
-                   */
-                   export const %s: (params: %s) => Promise<%s> = (params: %s) => http.post('%s', params);
-                   
-                   """;
-            apiTemplate.append(String.format(template,item.getTitle(),item.getUrl(),name,bodyNs,responseNs,bodyNs,item.getUrl()));
+        String url =  item.getUrl();
+        String pathNs = null;
+        String queryNs = null;
+        String bodyNs = null;
+        String responseNs = null;
+        if(notNull(item.path)){
+             pathNs = buildNs(item.path,String.format("%s.%s",namespace,name));
+             url = replacePlaceholders(url);
         }
 
+        if(notNull(item.query)){
+            queryNs = buildNs(item.query,String.format("%s.%s",namespace,name));
+            url = url+'?'+generateQueryParams(item.query);
+        }
+        url = String.format("`%s`", url);
+        if(notNull(item.body)){
+            bodyNs = buildNs(item.body,String.format("%s.%s",namespace,name));
+        }
+        if (notNull(item.response)){
+            responseNs = buildNs(item.response,String.format("%s.%s",namespace,name));
+        }
+        apiTemplate.append(String.format("""
+                   /*
+                    * %s
+                    * %s %s
+                   */
+                   export const %s: (""",item.getTitle(),item.getMethod().getValue().toUpperCase(),item.getUrl(),name));
+
+        if(notNull(pathNs)){
+            apiTemplate.append("path: ").append(pathNs).append(",");
+        }
+        if(notNull(queryNs)){
+            apiTemplate.append("query: ").append(queryNs).append(",");
+        }
+        if(notNull(bodyNs)){
+            apiTemplate.append("params: ").append(bodyNs).append(",");
+        }
+        if(apiTemplate.charAt(apiTemplate.length()-1)==','){
+            apiTemplate.deleteCharAt(apiTemplate.length()-1);
+        }
+        apiTemplate.append(")");
+        if(notNull(responseNs)){
+            apiTemplate.append(String.format("=> Promise<%s>",responseNs));
+        }else {
+            apiTemplate.append("=> Promise<unknown>");
+        }
+        apiTemplate.append("= (");
+        if(notNull(pathNs)){
+            apiTemplate.append("path: ").append(pathNs).append(",");
+        }
+        if(notNull(queryNs)){
+            apiTemplate.append("query: ").append(queryNs).append(",");
+        }
+        if(notNull(bodyNs)){
+            apiTemplate.append("params: ").append(bodyNs).append(",");
+        }
+        if(apiTemplate.charAt(apiTemplate.length()-1)==','){
+            apiTemplate.deleteCharAt(apiTemplate.length()-1);
+        }
+        apiTemplate.append(") => ");
+        if(item.getMethod() == MethodType.GET){
+            String template = "http.get(%s);";
+            apiTemplate.append(String.format(template,url));
+        }else{
+            if(notNull(bodyNs)){
+                String template = "http.post(%s, params);";
+                apiTemplate.append(String.format(template,url));
+            }else {
+                String template = "http.post(%s);";
+                apiTemplate.append(String.format(template,url));
+            }
+
+        }
+        apiTemplate.append("\n\n");
     }
 
 
@@ -243,7 +283,34 @@ public class FileOperation {
         return ns.toString();
     }
 
+    public static String replacePlaceholders(String originalString) {
+        // 正则表达式匹配形如 {(***)} 的占位符
+        Pattern pattern = Pattern.compile("\\{(.*?)\\}");
+        Matcher matcher = pattern.matcher(originalString);
 
+        StringBuffer result = new StringBuffer();
+        while (matcher.find()) {
+            // 获取占位符的内容
+            String placeholder = matcher.group(1);
+            // 替换为 ${data.***} 形式
+            matcher.appendReplacement(result, "\\${path." + placeholder + "}");
+        }
+        matcher.appendTail(result);
+
+        return result.toString();
+    }
+    public static String generateQueryParams(SchemaItem item) {
+        if(item.hasChildren()){
+            return item.getChildren().stream()
+                    .map(FileOperation::encodeQueryParam)
+                    .collect(Collectors.joining("&"));
+        }
+        return "";
+    }
+
+    private static String encodeQueryParam(SchemaItem d) {
+        return d.key + "=" + String.format("${query.%s}", d.key);
+    }
     public void InterfaceFormat(TreeItemVO item,StringBuilder interfaceTemplate,String namespace,int level){
         String [] tags = item.getUrl().split("/");
         String name = tags[tags.length-1];

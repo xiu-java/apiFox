@@ -15,6 +15,9 @@ dependencies {
   implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.3")
   implementation("com.google.code.gson:gson:2.8.9")
   implementation("commons-beanutils:commons-beanutils:1.9.4")
+  implementation("com.fasterxml.jackson.core:jackson-core:2.13.0")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
+  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0")
 }
 javafx {
   version = "22"

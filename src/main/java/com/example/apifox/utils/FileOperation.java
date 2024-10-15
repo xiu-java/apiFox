@@ -119,7 +119,7 @@ public class FileOperation {
         StringBuilder namespace= new StringBuilder("API");
         StringBuilder interfaceTemplate = new StringBuilder("declare namespace API {\n");
         StringBuilder apiTemplate = new StringBuilder(config.getHeader());
-        String[] paths = item.getUrl().split("/");
+        String[] paths = Arrays.stream(item.getUrl().split("/")).filter(p-> !p.isEmpty()&&!matchesPattern(p)).toArray(String[]::new);
         for (int i = 0; i < paths.length; i++) {
            String p = paths[i];
             if(!Objects.equals(p, "")){
@@ -139,14 +139,21 @@ public class FileOperation {
             }
         }
         interfaceTemplate.append("};");
-        String p = item.getUrl().substring(0,item.getUrl().lastIndexOf('/'));
-        String n = item.getUrl().substring(item.getUrl().lastIndexOf('/'));
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(paths));
+        String n = list.remove(list.size()-1);
+        String p = String.join("/", list);
         write(project,Paths.get(apiDir,p).toString(),n+".ts",apiTemplate.toString());
         write(project,Paths.get(interfaceDir,p).toString(),n+".d.ts",interfaceTemplate.toString());
     }
 
+    private  boolean matchesPattern(String str) {
+        // 正则表达式匹配类似 {***} 的模式
+        Pattern pattern = Pattern.compile("\\{.*\\}");
+        return pattern.matcher(str).matches();
+    }
+
     public void ApiFormat(TreeItemVO item, StringBuilder apiTemplate, String namespace){
-        String [] tags = item.getUrl().split("/");
+        String [] tags = Arrays.stream(item.getUrl().split("/")).filter(p-> !p.isEmpty()&&!matchesPattern(p)).toArray(String[]::new);
         String name = tags[tags.length-1];
         String url =  item.getUrl();
         String pathNs = null;
@@ -308,7 +315,7 @@ public class FileOperation {
         return d.key + "=" + String.format("${query.%s}", d.key);
     }
     public void InterfaceFormat(TreeItemVO item,StringBuilder interfaceTemplate,String namespace,int level){
-        String [] tags = item.getUrl().split("/");
+        String [] tags = Arrays.stream(item.getUrl().split("/")).filter(p-> !p.isEmpty()&&!matchesPattern(p)).toArray(String[]::new);
         String name = tags[tags.length-1];
         interfaceTemplate.append("  ".repeat(level)).append(String.format("namespace %s {\n",name));
         if(notNull(item.query)){

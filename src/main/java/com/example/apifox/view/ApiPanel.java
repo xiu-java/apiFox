@@ -36,7 +36,6 @@ public class ApiPanel extends JPanel {
                         Object nodeData = selectedNode.getUserObject();
                         if(nodeData instanceof TreeItemVO treeItemVO) {
                             detailDelegate.onDetailClick(treeItemVO);
-
                         }
                     }
                 }

@@ -2,9 +2,8 @@ package com.example.apifox.model;
 
 
 import com.example.apifox.model.openapi.v3.models.Operation;
-
+import com.example.apifox.model.openapi.v3.models.Components;
 import javax.swing.tree.DefaultMutableTreeNode;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TreeItemVO {
@@ -21,6 +20,7 @@ public class TreeItemVO {
     private Operation node;
     private DefaultMutableTreeNode treeNode;
     private List<TreeItemVO> children;
+    public static Components components;
 
     public MethodType getMethod() {
         return method;

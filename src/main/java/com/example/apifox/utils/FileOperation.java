@@ -17,9 +17,6 @@ import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,7 +29,6 @@ import java.util.stream.Collectors;
 import static com.intellij.openapi.util.NullUtils.notNull;
 
 public class FileOperation {
-
     String template = PropertiesComponent.getInstance().getValue("ApiFox.Template");
     String apiDir = PropertiesComponent.getInstance().getValue("ApiFox.ApiDir");
     String interfaceDir = PropertiesComponent.getInstance().getValue("ApiFox.InterfaceDir");

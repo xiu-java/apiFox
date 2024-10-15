@@ -36,6 +36,7 @@ public class SourcePanel extends JTree {
         setModel(model);
         setEditable(true);
         setCellRenderer(new DefaultTreeCellRenderer() {
+
             @Override
             public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
@@ -181,6 +182,7 @@ public class SourcePanel extends JTree {
     }
 
     public void updateUi(OpenAPI data) {
+        TreeItemVO.components = data.getComponents();
         TreeItemVO rootNode = new TreeItemVO();
         rootNode.setRoot(true);
         rootNode.setDirectory(true);

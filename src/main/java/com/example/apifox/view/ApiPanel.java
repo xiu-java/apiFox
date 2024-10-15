@@ -5,7 +5,6 @@ import com.example.apifox.interfaces.DetailDelegate;
 import com.example.apifox.model.TreeItemVO;
 import com.example.apifox.model.openapi.v3.models.OpenAPI;
 import com.example.apifox.service.ApiServiceImpl;
-import com.example.apifox.service.ProjectConfigImpl;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.ui.JBColor;
 
@@ -19,7 +18,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class ApiPanel extends JPanel {
     CardLayout cardLayout = new CardLayout();
-    ProjectConfigImpl dataSourceService = ProjectConfigImpl.getInstance(ProjectManager.getInstance().getDefaultProject());
     private final SourcePanel sourcePane =new SourcePanel();
     private final LoadingPanel loadingPanel =new LoadingPanel("加载中...",15,0);
     public ApiPanel(DetailDelegate detailDelegate) {
@@ -65,7 +63,6 @@ public class ApiPanel extends JPanel {
         future.thenAccept(tree -> {
             // 在异步操作完成后处理结果
             if (tree != null) {
-                dataSourceService.setComponents(tree.getComponents());
                 this.sourcePane.updateUi(tree);
             } else {
                 System.out.println("API request failed.");
